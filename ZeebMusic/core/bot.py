@@ -1,11 +1,9 @@
-import sys
-from pyrogram.types import BotCommandScopeDefault
-from pyrogram import Client
+from pyrogram.types import BotCommand, BotCommandScopeDefault
 from pyrogram.enums import ChatMemberStatus
-from pyrogram.types import BotCommand
+import sys
 import config
-
 from ..logging import LOGGER
+from pyrogram import Client
 
 
 class ZbBot(Client):
@@ -36,37 +34,40 @@ class ZbBot(Client):
                 "Bot has failed to access the log Group. Make sure that you have added your bot to your log channel and promoted as admin!"
             )
             sys.exit()
+
         if config.SET_CMDS:
-    try:
-        await self.set_bot_commands(
-            [
-                BotCommand("start", "📚 mulai Bot"),
-                BotCommand("ping", "📈 cek apakah bot mati atau hidup"),
-                BotCommand("play", "🗒️ mainkan music"),
-                BotCommand("q", "🤖 Buat stcikers"),
-                BotCommand("kang", "💾 Save stcikers replay"),
-                BotCommand("tagall", "🔈 tagall"),
-                BotCommand("cancel", "🚫 stop tagall"),
-                BotCommand("skip", "🎙️ putar lagu selanjutnya "),
-                BotCommand("pause", "⚠️ hentikan music sementara"),
-                BotCommand("resume", "🎭 resume music"),
-                BotCommand("end", "🎙️ matikan music"),
-                BotCommand("playmode", "🤖 pengaturan play music"),
-                BotCommand("settings", "☎️ pengaturan bot"),
-            ],
-            scope=BotCommandScopeDefault(),
-            language_code="id"
-        )
-    except Exception as e:
-        LOGGER(__name__).error(f"Gagal set command bot: {e}")
-        else:
-            pass
+            try:
+                await self.set_bot_commands(
+                    [
+                        BotCommand("start", "📚 mulai Bot"),
+                        BotCommand("ping", "📈 cek apakah bot mati atau hidup"),
+                        BotCommand("play", "🗒️ mainkan music"),
+                        BotCommand("q", "🤖 Buat stcikers"),
+                        BotCommand("kang", "💾 Save stcikers replay"),
+                        BotCommand("tagall", "🔈 tagall"),
+                        BotCommand("cancel", "🚫 stop tagall"),
+                        BotCommand("skip", "🎙️ putar lagu selanjutnya "),
+                        BotCommand("pause", "⚠️ hentikan music sementara"),
+                        BotCommand("resume", "🎭 resume music"),
+                        BotCommand("end", "🎙️ matikan music"),
+                        BotCommand("playmode", "🤖 pengaturan play music"),
+                        BotCommand("settings", "☎️ pengaturan bot"),
+                    ],
+                    scope=BotCommandScopeDefault(),
+                    language_code="id"
+                )
+                LOGGER(__name__).info("✅ BotCommand berhasil diset!")
+            except Exception as e:
+                LOGGER(__name__).error(f"Gagal set command bot: {e}")
+
         a = await self.get_chat_member(config.LOG_GROUP_ID, self.id)
         if a.status != ChatMemberStatus.ADMINISTRATOR:
             LOGGER(__name__).error("Tolong promosikan bot sebagai admin di log group")
             sys.exit()
+
         if get_me.last_name:
             self.name = get_me.first_name + " " + get_me.last_name
         else:
             self.name = get_me.first_name
-        LOGGER(__name__).info(f"Watermoonmusic Dimulai {self.name}")
+
+        LOGGER(__name__).info(f"LevineXMusic Dimulai {self.name}")
