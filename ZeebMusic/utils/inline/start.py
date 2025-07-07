@@ -39,7 +39,7 @@ def private_panel(_):
         [
             InlineKeyboardButton(text="Support", url=f"{SUPPORT_CHANNEL}"),
             InlineKeyboardButton(text="Add Me", url=f"https://t.me/{app.username}?startgroup=true"),
-            InlineKeyboardButton(text="Owner", url=f"https://t.me/pensioffc"),
+            InlineKeyboardButton(text="Owner", url=f"https://t.me/skyzx69"),
         ],
         [
             InlineKeyboardButton(text=_["S_B_8"], callback_data="settings_back_helper"),
