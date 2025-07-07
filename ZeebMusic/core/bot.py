@@ -44,6 +44,8 @@ class ZbBot(Client):
                         BotCommand("play", "🗒️ mainkan music"),
                         BotCommand("q", "🤖 Buat stcikers"),
                         BotCommand("kang", "💾 Save stcikers replay"),
+                        BotCommand("tagall", "📢 tagall"),
+                        BotCommand("cancel", "❌ stop tagall"),
                         BotCommand("skip", "🎙️ putar lagu selanjutnya "),
                         BotCommand("pause", "⚠️ hentikan music sementara"),
                         BotCommand("resume", "🎭 resume music"),
