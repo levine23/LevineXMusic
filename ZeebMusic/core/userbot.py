@@ -49,7 +49,7 @@ class Userbot(Client):
             await self.one.start()
             try:
                 await self.one.join_chat("mksyasayang")
-                await self.one.join_chat("ortukue")               
+                await self.one.join_chat("skandalanet")               
             except:
                 pass
             assistants.append(1)
@@ -74,7 +74,7 @@ class Userbot(Client):
             await self.two.start()
             try:
                 await self.two.join_chat("mksyasayang")
-                await self.two.join_chat("ortukue")
+                await self.two.join_chat("skandalanet")
             except:
                 pass
             assistants.append(2)
@@ -99,7 +99,7 @@ class Userbot(Client):
             await self.three.start()
             try:
                 await self.three.join_chat("mksyasayang")
-                await self.three.join_chat("ortukue")
+                await self.three.join_chat("skandalanet")
             except:
                 pass
             assistants.append(3)
@@ -123,7 +123,7 @@ class Userbot(Client):
         if config.STRING4:
             await self.four.start()
             try:
-                await self.four.join_chat("ortukue")
+                await self.four.join_chat("skandalanet")
                 await self.four.join_chat("mksyasayang")
             except:
                 pass
@@ -149,7 +149,7 @@ class Userbot(Client):
             await self.five.start()
             try:
                 await self.five.join_chat("mksyasayang")
-                await self.five.join_chat("ortukue")
+                await self.five.join_chat("skandalanet")
             except:
                 pass
             assistants.append(5)
