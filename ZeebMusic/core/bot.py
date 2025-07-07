@@ -36,32 +36,28 @@ class ZbBot(Client):
             )
             sys.exit()
         if config.SET_CMDS:
-            try:
-                await self.set_bot_commands(
-                    [
-                        BotCommand("start", "📚 mulai Bot"),
-                        BotCommand("ping", "📈 cek apakah bot mati atau hidup"),
-                        BotCommand("play", "🗒️ mainkan music"),
-                        BotCommand("q", "🤖 Buat stcikers"),
-                        BotCommand("kang", "💾 Save stcikers replay"),
-                        BotCommand("tagall", "🔈 tagall"),
-                        BotCommand("cancel", "🚫 stop tagall"),
-                        BotCommand("skip", "🎙️ putar lagu selanjutnya "),
-                        BotCommand("pause", "⚠️ hentikan music sementara"),
-                        BotCommand("resume", "🎭 resume music"),
-                        BotCommand("end", "🎙️ matikan music"),
-                        BotCommand(
-                            "playmode",
-                            "🤖 pengaturan play music",
-                        ),
-                        BotCommand(
-                            "settings",
-                            "☎️ pengaturan bot",
-                        ),
-                    ]
-                )
-            except:
-                pass
+    try:
+        await self.set_bot_commands(
+            [
+                BotCommand("start", "📚 mulai Bot"),
+                BotCommand("ping", "📈 cek apakah bot mati atau hidup"),
+                BotCommand("play", "🗒️ mainkan music"),
+                BotCommand("q", "🤖 Buat stcikers"),
+                BotCommand("kang", "💾 Save stcikers replay"),
+                BotCommand("tagall", "🔈 tagall"),
+                BotCommand("cancel", "🚫 stop tagall"),
+                BotCommand("skip", "🎙️ putar lagu selanjutnya "),
+                BotCommand("pause", "⚠️ hentikan music sementara"),
+                BotCommand("resume", "🎭 resume music"),
+                BotCommand("end", "🎙️ matikan music"),
+                BotCommand("playmode", "🤖 pengaturan play music"),
+                BotCommand("settings", "☎️ pengaturan bot"),
+            ],
+            scope=BotCommandScopeDefault(),
+            language_code="id"
+        )
+    except Exception as e:
+        LOGGER(__name__).error(f"Gagal set command bot: {e}")
         else:
             pass
         a = await self.get_chat_member(config.LOG_GROUP_ID, self.id)
