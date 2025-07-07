@@ -84,13 +84,13 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 # For customized or modified Repository
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "",
+    "https://github.com/levine23/LevineXMusic",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 
 # GIT TOKEN ( if your edited repo is private)
 GIT_TOKEN = getenv(
-    "GIT_TOKEN")
+    "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")
 
 
 # Only  Links formats are  accepted for this Var value.
@@ -122,7 +122,7 @@ TELEGRAM_DOWNLOAD_EDIT_SLEEP = int(getenv("TELEGRAM_EDIT_SLEEP", "5"))
 
 
 # Your Github Repo.. Will be shown on /start Command
-GITHUB_REPO = getenv("GITHUB_REPO", "")
+GITHUB_REPO = getenv("GITHUB_REPO", "https://github.com/levine23")
 
 
 # Spotify Client.. Get it from https://developer.spotify.com/dashboard
