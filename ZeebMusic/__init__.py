@@ -1,3 +1,4 @@
+from SafeoneAPI import SafeoneAPI
 from ZeebMusic.core.bot import ZbBot
 from ZeebMusic.core.dir import dirr
 from ZeebMusic.core.git import git
@@ -19,6 +20,8 @@ heroku()
 
 # Load Sudo Users from DB
 sudo()
+
+api = SafeoneAPI()
 
 # Bot Client
 app = ZbBot()
