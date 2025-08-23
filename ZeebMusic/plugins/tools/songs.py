@@ -289,7 +289,7 @@ async def song_download_cb(client, CallbackQuery, _):
 
     try:
 
-        await CallbackQuery.answer("ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ...")
+        await CallbackQuery.answer("<blockquote>ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ...</blockquote>")
 
     except:
 
