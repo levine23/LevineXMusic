@@ -438,7 +438,7 @@ async def authusers_mar(client, CallbackQuery, _):
 
 
 __MODULE__ = "Settings"
-__HELP__ = """<blockquote><b>✅<u>Group Settings:</u>
+__HELP__ = """<blockquote expandable><b>✅<u>Group Settings:</u>
 /settings, /setting: Access settings menu.
 
 Features:
