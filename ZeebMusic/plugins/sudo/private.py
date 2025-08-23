@@ -91,7 +91,7 @@ async def authorized(client, message: Message, _):
 
 
 __MODULE__ = "Private"
-__HELP__ = """<blockquote><b>
+__HELP__ = """<blockquote expandable><b>
       ⚡️<u>Pʀɪᴠᴀᴛᴇ Bᴏᴛ Fᴜɴᴄᴛɪᴏɴ:</u>
 /authorize [CHAT_ID] - Aʟʟᴏᴡ ᴀ ᴄʜᴀᴛ ғᴏʀ ᴜsɪɴɢ ʏᴏᴜʀ ʙᴏᴛ.
 /unauthorize[CHAT_ID] - Dɪsᴀʟʟᴏᴡ ᴀ ᴄʜᴀᴛ ғʀᴏᴍ ᴜsɪɴɢ ʏᴏᴜʀ ʙᴏᴛ.
