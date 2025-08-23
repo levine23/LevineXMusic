@@ -35,7 +35,7 @@ DURATION_LIMIT_MIN = int(
 )  # Remember to give value in Minutes
 
 # forced entry
-MUST_JOIN = getenv("MUST_JOIN", "mksyabub")
+MUST_JOIN = getenv("MUST_JOIN", "storepler")
 
 
 EXTRA_PLUGINS = getenv(
