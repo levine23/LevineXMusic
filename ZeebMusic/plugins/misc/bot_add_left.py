@@ -18,12 +18,12 @@ async def join_watcher(_, message):
                     message.chat.username if message.chat.username else "ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ"
                 )
                 msg = (
-                    f"**ᴍᴜsɪᴄ ʙᴏᴛ ᴀᴅᴅᴇᴅ ɪɴ ᴀ ɴᴇᴡ ɢʀᴏᴜᴘ #New_Group**\n\n"
+                    f"<blockquote expandable>**ᴍᴜsɪᴄ ʙᴏᴛ ᴀᴅᴅᴇᴅ ɪɴ ᴀ ɴᴇᴡ ɢʀᴏᴜᴘ #New_Group**\n\n"
                     f"**ᴄʜᴀᴛ ɴᴀᴍᴇ:** {message.chat.title}\n"
                     f"**ᴄʜᴀᴛ ɪᴅ:** {message.chat.id}\n"
                     f"**ᴄʜᴀᴛ ᴜsᴇʀɴᴀᴍᴇ:** @{username}\n"
                     f"**ᴄʜᴀᴛ ᴍᴇᴍʙᴇʀ ᴄᴏᴜɴᴛ:** {count}\n"
-                    f"**ᴀᴅᴅᴇᴅ ʙʏ:** {message.from_user.mention}"
+                    f"**ᴀᴅᴅᴇᴅ ʙʏ:** {message.from_user.mention}</blockquote>"
                 )
                 await app.send_message(
                     LOG_GROUP_ID,
@@ -52,14 +52,14 @@ async def on_left_chat_member(_, message: Message):
         left_chat_member = message.left_chat_member
         if left_chat_member and left_chat_member.id == app.id:
             remove_by = (
-                message.from_user.mention if message.from_user else "𝐔ɴᴋɴᴏᴡɴ 𝐔sᴇʀ"
+                message.from_user.mention if message.from_user else "<blockquote>𝐔ɴᴋɴᴏᴡɴ 𝐔sᴇʀ</blockquote>"
             )
             title = message.chat.title
             username = (
-                f"@{message.chat.username}" if message.chat.username else "ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ"
+                f"<blockquote>@{message.chat.username}" if message.chat.username else "ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ</blockquote>"
             )
             chat_id = message.chat.id
-            left = f"✫ <b><u>#Left_group</u></b> ✫\nᴄʜᴀᴛ ɴᴀᴍᴇ : {title}\nᴄʜᴀᴛ ɪᴅ : {chat_id}\n\nʀᴇᴍᴏᴠᴇᴅ ʙʏ : {remove_by}"
+            left = f"<blockquote expandable>✫ <b><u>#Left_group</u></b> ✫\nᴄʜᴀᴛ ɴᴀᴍᴇ : {title}\nᴄʜᴀᴛ ɪᴅ : {chat_id}\n\nʀᴇᴍᴏᴠᴇᴅ ʙʏ : {remove_by}</blockquote>"
             await app.send_message(LOG_GROUP_ID, text=left)
             await delete_served_chat(chat_id)
             await userbot.leave_chat(chat_id)
