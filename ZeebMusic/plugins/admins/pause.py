@@ -1,7 +1,7 @@
 from pyrogram import filters
 from pyrogram.types import Message
 
-from config import BANNED_USERS, CHANNEL_USERNAME
+from config import BANNED_USERS
 from strings import get_command
 from ZeebMusic import app
 from ZeebMusic.core.call import Zb
@@ -13,7 +13,6 @@ PAUSE_COMMAND = get_command("PAUSE_COMMAND")
 
 
 @app.on_message(filters.command(PAUSE_COMMAND) & filters.group & ~BANNED_USERS)
-@require_fsub
 @AdminRightsCheck
 async def pause_admin(cli, message: Message, _, chat_id):
     if not len(message.command) == 1:
