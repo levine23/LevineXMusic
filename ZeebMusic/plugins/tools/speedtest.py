@@ -31,7 +31,7 @@ async def speedtest_function(client, message):
     m = await message.reply_text("maksimal kecepatan server")
     loop = asyncio.get_event_loop_policy().get_event_loop()
     result = await loop.run_in_executor(None, testspeed, m)
-    output = f"""**mendapatkan kecepatan server**
+    output = f"""<blockquote expandable>**mendapatkan kecepatan server**
     
 <u>**ᴄʟɪᴇɴᴛ:**</u>
 **ɪsᴘ :** {result['client']['isp']}
@@ -42,7 +42,7 @@ async def speedtest_function(client, message):
 **ᴄᴏᴜɴᴛʀʏ :** {result['server']['country']}, {result['server']['cc']}
 **sᴘᴏɴsᴏʀ :** {result['server']['sponsor']}
 **ʟᴀᴛᴇɴᴄʏ :** {result['server']['latency']}  
-**ᴘɪɴɢ :** {result['ping']}"""
+**ᴘɪɴɢ :** {result['ping']}</blockquote>"""
     msg = await app.send_photo(
         chat_id=message.chat.id, photo=result["share"], caption=output
     )
