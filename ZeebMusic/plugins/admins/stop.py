@@ -3,7 +3,7 @@ from pyrogram.types import Message
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
-from config import BANNED_USERS
+from config import BANNED_USERS, CHANNEL_USERNAME
 from ZeebMusic import app
 from ZeebMusic.core.call import Zb
 from ZeebMusic.utils.database import (
@@ -26,6 +26,7 @@ from ZeebMusic.misc import SUDOERS
 @app.on_message(
     filters.command(["stop", "end", "cstop", "cend"]) & filters.group & ~BANNED_USERS
 )
+@require_fsub
 async def stop_music(cli, message: Message):
     if await is_maintenance() is False:
         if message.from_user.id not in SUDOERS:
