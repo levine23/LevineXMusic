@@ -10,7 +10,7 @@ from pyrogram.enums import ChatMemberStatus
 async def gib_repo_callback(_, callback_query):
     if app.username == "StreamingMusicBot":
         try:
-            get = await app.get_chat_member(-1002119660672, callback_query.from_user.id)
+            get = await app.get_chat_member(-1002748023918, callback_query.from_user.id)
         except ChatAdminRequired:
             return await callback_query.message.edit(
                 "Support chat",
@@ -39,7 +39,7 @@ async def gib_repo_callback(_, callback_query):
             )
 #         if get.status == ChatMemberStatus.LEFT:
 #             return await callback_query.message.edit(
-#                 "Bantu support dengan join ke Channels atau group",
+#                 "<blockquote>Bantu support dengan join ke Channels atau group</blockquote>",
 #                 reply_markup=InlineKeyboardMarkup(
 #                     [
 #                         [
@@ -51,7 +51,7 @@ async def gib_repo_callback(_, callback_query):
 #             )
 #         else:
 #             return await callback_query.message.edit(
-#                 "Are you asking about repo? If you want to ask about the repo, please ask by contacting my developer [Developer](https://t.me/Usern4meDoesNotExist404)",
+#                 "<blockquote expandable>Are you asking about repo? If you want to ask about the repo, please ask by contacting my developer [Developer](https://t.me/skyzi69)</blockquote>",
 #                 disable_web_page_preview=True,
 #                 reply_markup=InlineKeyboardMarkup(
 #                     [
