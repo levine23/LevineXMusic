@@ -108,9 +108,9 @@ async def stream(
                     original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-    details["title"],   # {0} = Judul
-    details["link"],    # {1} = Link ke track
-    details["duration"],# {2} = Durasi
+    title,   # {0} = Judul
+    link,    # {1} = Link ke track
+    duration,# {2} = Durasi
     user_name           # {3} = Nama user yang request
 ),
                     reply_markup=InlineKeyboardMarkup(button),
@@ -195,9 +195,9 @@ async def stream(
                     original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-    details["title"],   # {0} = Judul
-    details["link"],    # {1} = Link ke track
-    details["duration"],# {2} = Durasi
+    title,   # {0} = Judul
+    link,    # {1} = Link ke track
+    duration,# {2} = Durasi
     user_name           # {3} = Nama user yang request
 ),
                     reply_markup=InlineKeyboardMarkup(button),
