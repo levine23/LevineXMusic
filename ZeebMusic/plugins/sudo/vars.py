@@ -61,7 +61,7 @@ async def varsFunc(client, message):
     owner_id = " ,".join(owners)
     tg_aud = convert_bytes(config.TG_AUDIO_FILESIZE_LIMIT)
     tg_vid = convert_bytes(config.TG_VIDEO_FILESIZE_LIMIT)
-    text = f"""**MUSIC BOT CONFIG:**
+    text = f"""<blockquote expandable>**MUSIC BOT CONFIG:**
 
 **<u>Basic Vars:</u>**
 `DURATION_LIMIT` : **{play_duration} min**
@@ -96,7 +96,7 @@ async def varsFunc(client, message):
 **<u>URL Vars:</u>**
 `SUPPORT_CHANNEL` : **{s_c}**
 `SUPPORT_GROUP` : ** {s_g}**
-`START_IMG_URL` : ** {start}**
+`START_IMG_URL` : ** {start}**</blockquote>
     """
     await asyncio.sleep(1)
 
