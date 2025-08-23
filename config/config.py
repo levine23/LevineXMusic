@@ -35,12 +35,12 @@ DURATION_LIMIT_MIN = int(
 )  # Remember to give value in Minutes
 
 # forced entry
-MUST_JOIN = getenv("MUST_JOIN", "mksyasayang")
+MUST_JOIN = getenv("MUST_JOIN", "storepler")
 
 
 EXTRA_PLUGINS = getenv(
     "EXTRA_PLUGINS",
-    "True",
+    "False",
 )
 
 # Fill True if you want to load extra plugins
@@ -65,7 +65,7 @@ SONG_DOWNLOAD_DURATION = int(
 
 
 # You'll need a Private Group ID for this.
-LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", "-1002744466686"))
+LOG_GROUP_ID = int(getenv("LOG_GROUP_ID", ""))
 
 
 # Your User ID.
@@ -84,7 +84,7 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 # For customized or modified Repository
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/levine23/LevineXMusic",
+    "https://github.com/levine23",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 
@@ -95,10 +95,10 @@ GIT_TOKEN = getenv(
 
 # Only  Links formats are  accepted for this Var value.
 SUPPORT_CHANNEL = getenv(
-    "SUPPORT_CHANNEL", "https://t.me/skandalanet"
+    "SUPPORT_CHANNEL", "https://t.me/storepler"
 )  
 SUPPORT_GROUP = getenv(
-    "SUPPORT_GROUP", "https://t.me/mksyasayang"
+    "SUPPORT_GROUP", "https://t.me/zonamedia69"
 )  
 
 
@@ -153,7 +153,7 @@ TG_VIDEO_FILESIZE_LIMIT = int(
     getenv("TG_VIDEO_FILESIZE_LIMIT", "2147483648")
 )  # Remember to give value in bytes
 
-SET_CMDS = getenv("SET_CMDS", "False")
+SET_CMDS = getenv("SET_CMDS", "True")
 
 STRING1 = getenv("STRING_SESSION", None)
 STRING2 = getenv("STRING_SESSION2", None)
@@ -179,14 +179,14 @@ autoclean = []
 PHOTO = list(
     filter(
         None,
-        getenv("PHOTO_LINKS", "https://files.catbox.moe/lxtxhr.jpg").split(),
+        getenv("PHOTO_LINKS", "https://files.catbox.moe/ug9gtq.jpg").split(),
     )
 )
 
 
 START_IMG_URL = getenv(
     "START_IMG_URL",
-    "https://files.catbox.moe/lxtxhr.jpg",
+    "https://files.catbox.moe/ug9gtq.jpg",
 )
 PING_IMG_URL = getenv(
     "PING_IMG_URL",
