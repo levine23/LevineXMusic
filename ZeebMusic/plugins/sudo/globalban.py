@@ -124,9 +124,9 @@ async def gbanned_list(client, message: Message, _):
         try:
             user = await app.get_users(user_id)
             user = user.first_name if not user.mention else user.mention
-            msg += f"{count}➤ {user}\n"
+            msg += f"<blockquote>{count}➤ {user}\n</blockquote>"
         except Exception:
-            msg += f"{count}➤ [Unfetched User]{user_id}\n"
+            msg += f"<blockquote>{count}➤ [Unfetched User]{user_id}\n</blockquote>"
             continue
     if count == 0:
         return await mystic.edit_text(_["gban_10"])
