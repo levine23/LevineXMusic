@@ -168,9 +168,9 @@ async def top_users_ten(client, CallbackQuery: CallbackQuery, _):
                 details = stats.get(items)
                 title = (details["title"][:35]).title()
                 if items == "telegram":
-                    msg += f"🔗[ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs ᴀɴᴅ ᴀᴜᴅɪᴏs](https://t.me/telegram)  ᴘʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs\n\n"
+                    msg += f"<blockquote>🔗[ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs ᴀɴᴅ ᴀᴜᴅɪᴏs](https://t.me/telegram)  ᴘʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs\n\n</blockquote>"
                 else:
-                    msg += f"🔗 [{title}](https://www.youtube.com/watch?v={items})  ᴘʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs\n\n"
+                    msg += f"<blockquote>🔗 [{title}](https://www.youtube.com/watch?v={items})  ᴘʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs\n\n</blockquote>"
 
             temp = (
                 _["gstats_4"].format(
@@ -208,7 +208,7 @@ async def top_users_ten(client, CallbackQuery: CallbackQuery, _):
             except:
                 continue
             limit += 1
-            msg += f"🔗`{extract}` ᴘʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs ᴏɴ ʙᴏᴛ.\n\n"
+            msg += f"<blockquote>🔗`{extract}` ᴘʟᴀʏᴇᴅ {count} ᴛɪᴍᴇs ᴏɴ ʙᴏᴛ.\n\n</blockquote>"
         temp = (
             _["gstats_5"].format(limit, app.mention)
             if what == "Chats"
@@ -253,7 +253,7 @@ async def overall_stats(client, CallbackQuery, _):
         ass = "Yes"
     else:
         ass = "No"
-    text = f"""ʙᴏᴛ's sᴛᴀᴛs ᴀɴᴅ ɪɴғᴏʀᴍᴀᴛɪᴏɴ:
+    text = f"""<blockquote expandable>ʙᴏᴛ's sᴛᴀᴛs ᴀɴᴅ ɪɴғᴏʀᴍᴀᴛɪᴏɴ:
 
 ɪᴍᴘᴏʀᴛᴇᴅ ᴍᴏᴅᴜʟᴇs: {mod}
 sᴇʀᴠᴇᴅ ᴄʜᴀᴛs: {served_chats} 
@@ -268,7 +268,7 @@ sᴜᴅᴏ ᴜsᴇʀs: {sudoers}
 ᴘʟᴀʏ ᴅᴜʀᴀᴛɪᴏɴ ʟɪᴍɪᴛ: {play_duration} ᴍɪɴs
 sᴏɴɢ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪᴍɪᴛ: {song} ᴍɪɴs
 ʙᴏᴛ's sᴇʀᴠᴇʀ ᴘʟᴀʏʟɪsᴛ ʟɪᴍɪᴛ: {playlist_limit}
-ᴘʟᴀʏʟɪsᴛ ᴘʟᴀʏ ʟɪᴍɪᴛ: {fetch_playlist}"""
+ᴘʟᴀʏʟɪsᴛ ᴘʟᴀʏ ʟɪᴍɪᴛ: {fetch_playlist}</blockquote>"""
     med = InputMediaPhoto(media=config.STATS_IMG_URL, caption=text)
     try:
         await CallbackQuery.edit_message_media(media=med, reply_markup=upl)
@@ -282,7 +282,7 @@ sᴏɴɢ ᴅᴏᴡɴʟᴏᴀᴅ ʟɪᴍɪᴛ: {song} ᴍɪɴs
 @languageCB
 async def overall_stats(client, CallbackQuery, _):
     if CallbackQuery.from_user.id not in SUDOERS:
-        return await CallbackQuery.answer("ᴏɴʟʏ ғᴏʀ sᴜᴅᴏ ᴜsᴇʀ's", show_alert=True)
+        return await CallbackQuery.answer("<blockquote>ᴏɴʟʏ ғᴏʀ sᴜᴅᴏ ᴜsᴇʀ's</blockquote>", show_alert=True)
     callback_data = CallbackQuery.data.strip()
     what = callback_data.split(None, 1)[1]
     if what != "s":
@@ -327,7 +327,7 @@ async def overall_stats(client, CallbackQuery, _):
     total_queries = await get_queries()
     blocked = len(BANNED_USERS)
     sudoers = len(await get_sudoers())
-    text = f""" ʙᴏᴛ sᴛᴀᴛ's ᴀɴᴅ ɪɴғᴏʀᴍᴀᴛɪᴏɴ:
+    text = f""" <blockquote expandable>ʙᴏᴛ sᴛᴀᴛ's ᴀɴᴅ ɪɴғᴏʀᴍᴀᴛɪᴏɴ:
 
 ɪᴍᴘᴏʀᴛᴇᴅ ᴍᴏᴅᴜʟᴇs: {mod}
 ᴘʟᴀᴛғᴏʀᴍ: {sc}
@@ -353,7 +353,7 @@ sᴜᴅᴏ ᴜsᴇʀs: {sudoers}
 ᴛᴏᴛᴀʟ ᴅʙ ᴄᴏʟʟᴇᴄᴛɪᴏɴs: {collections}
 ᴛᴏᴛᴀʟ ᴅʙ ᴋᴇʏs: {objects}
 ᴛᴏᴛᴀʟ ʙᴏᴛ ǫᴜᴇʀɪᴇs: `{total_queries} `
-    """
+    </blockquote>"""
     med = InputMediaPhoto(media=config.STATS_IMG_URL, caption=text)
     try:
         await CallbackQuery.edit_message_media(media=med, reply_markup=upl)
