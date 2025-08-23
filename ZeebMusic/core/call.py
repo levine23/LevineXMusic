@@ -575,7 +575,6 @@ class Call(PyTgCalls):
         async def stream_services_handler(_, chat_id: int):
            await self.stop_stream(chat_id)
 
-        # Handler: Saat stream berakhir
         @self.one.on_update(filters.stream_end)
         @self.two.on_update(filters.stream_end)
         @self.three.on_update(filters.stream_end)
@@ -586,7 +585,7 @@ class Call(PyTgCalls):
             try:
                 check = db.get(chat_id)
                 if not check or len(check) == 0:
-                    await self._clear_(chat_id)
+                    await _clear_(chat_id)
                     await client.leave_call(chat_id)
                     print(f"[AutoLeave] Assistant keluar otomatis dari VC {chat_id}")
                 else:
@@ -594,15 +593,8 @@ class Call(PyTgCalls):
                     await self.play(client, chat_id)
             except Exception as e:
                 print(f"[StreamEnd ERROR] {e}")
+                return
 
-        # Handler: Hitung participant (autoend timer)
-        @self.one.on_update(filters.participant_updated)
-        @self.two.on_update(filters.participant_updated)
-        @self.three.on_update(filters.participant_updated)
-        @self.four.on_update(filters.participant_updated)
-        @self.five.on_update(filters.participant_updated)
-        async def participants_handler(client, update: Update):
-            chat_id = update.chat_id
             users = counter.get(chat_id)
             if not users:
                 try:
