@@ -600,7 +600,7 @@ async def stream_end_handler1(client, update: Update):
                 try:
                     got = len(await client.get_participants(chat_id))
                 except:
-                    return
+
                 counter[chat_id] = got
                 if got == 1:
                     autoend[chat_id] = datetime.now() + timedelta(minutes=AUTO_END_TIME)
