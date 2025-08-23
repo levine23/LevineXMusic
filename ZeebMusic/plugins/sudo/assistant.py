@@ -14,13 +14,13 @@ async def set_pfp(client, message):
     from ZeebMusic.core.userbot import assistants
 
     if not message.reply_to_message or not message.reply_to_message.photo:
-        return await eor(message, text="Reply to a photo")
+        return await eor(message, text="<blockquote>Reply to a photo</blockquote>")
     for num in assistants:
         client = await get_client(num)
         photo = await message.reply_to_message.download()
         try:
             await client.set_profile_photo(photo=photo)
-            await eor(message, text="Successfully Changed PFP.")
+            await eor(message, text="<blockquote>Successfully Changed PFP.</blockquote>")
             os.remove(photo)
         except Exception as e:
             await eor(message, text=e)
@@ -32,18 +32,18 @@ async def set_bio(client, message):
     from ZeebMusic.core.userbot import assistants
 
     if len(message.command) == 1:
-        return await eor(message, text="Give some text to set as bio.")
+        return await eor(message, text="<blockquote>Give some text to set as bio.</blockquote>")
     elif len(message.command) > 1:
         for num in assistants:
             client = await get_client(num)
             bio = message.text.split(None, 1)[1]
         try:
             await client.update_profile(bio=bio)
-            await eor(message, text="Changed Bio.")
+            await eor(message, text="<blockquote>Changed Bio.</blockquote>")
         except Exception as e:
             await eor(message, text=e)
     else:
-        return await eor(message, text="Give some text to set as bio.")
+        return await eor(message, text="<blockquote>Give some text to set as bio.</blockquote>")
 
 
 @app.on_message(filters.command("setname", prefixes=".") & SUDOERS)
@@ -51,18 +51,18 @@ async def set_name(client, message):
     from ZeebMusic.core.userbot import assistants
 
     if len(message.command) == 1:
-        return await eor(message, text="Give some text to set as name.")
+        return await eor(message, text="<blockquote>Give some text to set as name.</blockquote>")
     elif len(message.command) > 1:
         for num in assistants:
             client = await get_client(num)
             name = message.text.split(None, 1)[1]
         try:
             await client.update_profile(first_name=name)
-            await eor(message, text=f"name Changed to {name} .")
+            await eor(message, text=f"<blockquote>name Changed to {name} .</blockquote>")
         except Exception as e:
             await eor(message, text=e)
     else:
-        return await eor(message, text="Give some text to set as name.")
+        return await eor(message, text="<blockquote>Give some text to set as name.</blockquote>")
 
 
 @app.on_message(filters.command("delpfp", prefixes=".") & SUDOERS)
@@ -75,9 +75,9 @@ async def del_pfp(client, message):
         try:
             if photos:
                 await client.delete_profile_photos(photos[0].file_id)
-                await eor(message, text="Successfully deleted photo")
+                await eor(message, text="<blockquote>Successfully deleted photo</blockquote>")
             else:
-                await eor(message, text="No profile photos found.")
+                await eor(message, text="<blockquote>No profile photos found.</blockquote>")
         except Exception as e:
             await eor(message, text=e)
 
@@ -92,9 +92,9 @@ async def delall_pfp(client, message):
         try:
             if photos:
                 await client.delete_profile_photos([p.file_id for p in photos[1:]])
-                await eor(message, text="Successfully deleted photos")
+                await eor(message, text="<blockquote>Successfully deleted photos</blockquote>")
             else:
-                await eor(message, text="No profile photos found.")
+                await eor(message, text="<blockquote>No profile photos found.</blockquote>")
         except Exception as e:
             await eor(message, text=e)
 
@@ -110,7 +110,7 @@ async def eor(msg: Message, **kwargs):
 
 
 __MODULE__ = "Ass"
-__HELP__ = """<blockquote><b>
+__HELP__ = """<blockquote expandable><b>
 
 <u> ᴀssɪsᴛᴀɴᴛ's ᴄᴏᴍᴍᴀɴᴅ:</u>
 .setpfp - ʀᴇᴘʟʏ ɪɴ ᴘʜᴏᴛᴏ ᴛᴏ sᴇᴛ ᴀʟʟ ʙᴏᴛ ᴀssɪsᴛᴀɴᴛ ᴘʀᴏғɪʟᴇ ᴘɪᴄᴛᴜʀᴇ [ᴏɴʟʏ ᴘʜᴏᴛᴏ] [ᴏɴʟʏ ғᴏʀ sᴜᴅᴏ ᴜsᴇʀ]
