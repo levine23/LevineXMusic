@@ -14,20 +14,20 @@ async def assis_change(_, message: Message):
     avt = await assistant()
     if avt == True:
         return await message.reply_text(
-            "sᴏʀʀʏ sɪʀ! ɪɴ ʙᴏᴛ sᴇʀᴠᴇʀ ᴏɴʟʏ ᴏɴʀ ᴀssɪsᴛᴀɴᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ᴛʜᴇʀᴇғᴏʀᴇ ʏᴏᴜ ᴄᴀɴᴛ ᴄʜᴀɴɢᴇ ᴀssɪsᴛᴀɴᴛ"
+            "<blockquote expandable>sᴏʀʀʏ sɪʀ! ɪɴ ʙᴏᴛ sᴇʀᴠᴇʀ ᴏɴʟʏ ᴏɴʀ ᴀssɪsᴛᴀɴᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ᴛʜᴇʀᴇғᴏʀᴇ ʏᴏᴜ ᴄᴀɴᴛ ᴄʜᴀɴɢᴇ ᴀssɪsᴛᴀɴᴛ</blockquote>"
         )
-    usage = f"**ᴅᴇᴛᴇᴄᴛᴇᴅ ᴡʀᴏɴɢ ᴄᴏᴍᴍᴀɴᴅ ᴜsᴀsɢᴇ \n**ᴜsᴀsɢᴇ:**\n/changeassistant - ᴛᴏ ᴄʜᴀɴɢᴇ ʏᴏᴜʀ ᴄᴜʀʀᴇɴᴛ ɢʀᴏᴜᴘ's ᴀssɪsᴛᴀɴᴛ ᴛᴏ ʀᴀɴᴅᴏᴍ ᴀssɪsᴛᴀɴᴛ ɪɴ ʙᴏᴛ sᴇʀᴠᴇʀ"
+    usage = f"<blockquote expandable>**ᴅᴇᴛᴇᴄᴛᴇᴅ ᴡʀᴏɴɢ ᴄᴏᴍᴍᴀɴᴅ ᴜsᴀsɢᴇ \n**ᴜsᴀsɢᴇ:**\n/changeassistant - ᴛᴏ ᴄʜᴀɴɢᴇ ʏᴏᴜʀ ᴄᴜʀʀᴇɴᴛ ɢʀᴏᴜᴘ's ᴀssɪsᴛᴀɴᴛ ᴛᴏ ʀᴀɴᴅᴏᴍ ᴀssɪsᴛᴀɴᴛ ɪɴ ʙᴏᴛ sᴇʀᴠᴇʀ</blockquote>"
     if len(message.command) > 2:
         return await message.reply_text(usage)
     a = await get_assistant(message.chat.id)
-    DETAILS = f"ʏᴏᴜʀ ᴄʜᴀᴛ's ᴀssɪsᴛᴀɴᴛ ʜᴀs ʙᴇᴇɴ ᴄʜᴀɴɢᴇᴅ ғʀᴏᴍ [{a.name}](https://t.me/{a.username}) "
+    DETAILS = f"<blockquote>ʏᴏᴜʀ ᴄʜᴀᴛ's ᴀssɪsᴛᴀɴᴛ ʜᴀs ʙᴇᴇɴ ᴄʜᴀɴɢᴇᴅ ғʀᴏᴍ [{a.name}](https://t.me/{a.username}) </blockquote>"
     if not message.chat.id == LOG_GROUP_ID:
         try:
             await a.leave_chat(message.chat.id)
         except:
             pass
     b = await set_assistant(message.chat.id)
-    DETAILS += f"ᴛᴏ [{b.name}](https://t.me/{b.username})"
+    DETAILS += f"<blockquote>ᴛᴏ [{b.name}](https://t.me/{b.username})</blockquote>"
     try:
         await b.join_chat(message.chat.id)
     except:
@@ -40,7 +40,7 @@ async def assis_set(_, message: Message):
     avt = await assistant()
     if avt == True:
         return await message.reply_text(
-            "sᴏʀʀʏ sɪʀ! ɪɴ ʙᴏᴛ sᴇʀᴠᴇʀ ᴏɴʟʏ ᴏɴᴇ ᴀssɪsᴛᴀɴᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ᴛʜᴇʀᴇғᴏʀᴇ ʏᴏᴜ ᴄᴀɴ'ᴛ ᴄʜᴀɴɢᴇ ᴀssɪsᴛᴀɴᴛ"
+            "<blockquote expandable>sᴏʀʀʏ sɪʀ! ɪɴ ʙᴏᴛ sᴇʀᴠᴇʀ ᴏɴʟʏ ᴏɴᴇ ᴀssɪsᴛᴀɴᴛ ᴀᴠᴀɪʟᴀʙʟᴇ ᴛʜᴇʀᴇғᴏʀᴇ ʏᴏᴜ ᴄᴀɴ'ᴛ ᴄʜᴀɴɢᴇ ᴀssɪsᴛᴀɴᴛ</blockquote>"
         )
     usage = await get_assistant_details()
     if len(message.command) != 2:
@@ -59,18 +59,18 @@ async def assis_set(_, message: Message):
         await b.join_chat(message.chat.id)
     except:
         pass
-    DETAILS = f""" ʏᴏᴜʀ ᴄʜᴀᴛ's  ɴᴇᴡ ᴀssɪsᴛᴀɴᴛ ᴅᴇᴛᴀɪʟs:
+    DETAILS = f"""<blockquote expandable> ʏᴏᴜʀ ᴄʜᴀᴛ's  ɴᴇᴡ ᴀssɪsᴛᴀɴᴛ ᴅᴇᴛᴀɪʟs:
                    ᴀssɪsᴛᴀɴᴛ ɴᴀᴍᴇ :- {a.name}
                    ᴀssɪsᴛᴀɴᴛ ᴜsᴇʀɴᴀᴍᴇ :- {a.username}
-                   ᴀssɪsᴛᴀɴᴛ ɪᴅ:- @{a.id}"""
+                   ᴀssɪsᴛᴀɴᴛ ɪᴅ:- @{a.id}</blockquote>"""
     await message.reply_text(DETAILS, disable_web_page_preview=True)
 
 
 @app.on_message(filters.command("checkassistant") & filters.group & admin_filter)
 async def check_ass(_, message: Message):
     assistant = await get_assistant(message.chat.id)
-    DETAILS = f"""Your chat's assistant details:
+    DETAILS = f"""<blockquote expandable>Your chat's assistant details:
 Assistant Name :- {assistant.name}
 Assistant Username :- {assistant.username}
-Assistant ID:- @{assistant.id}"""
+Assistant ID:- @{assistant.id}</blockquote>"""
     await message.reply_text(DETAILS, disable_web_page_preview=True)
