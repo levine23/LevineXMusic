@@ -83,7 +83,7 @@ async def start_comm(client, message: Message, _):
                 logging.exception(e)
 
         if name[0:3] == "sta":
-            m = await message.reply_text("🔎 ғᴇᴛᴄʜɪɴɢ ʏᴏᴜʀ ᴘᴇʀsᴏɴᴀʟ sᴛᴀᴛs.!")
+            m = await message.reply_text("<blockquote>🔎 ғᴇᴛᴄʜɪɴɢ ʏᴏᴜʀ ᴘᴇʀsᴏɴᴀʟ sᴛᴀᴛs.!</blockquote>")
             stats = await get_userss(message.from_user.id)
             tot = len(stats)
             if not stats:
@@ -118,9 +118,9 @@ async def start_comm(client, message: Message, _):
                     details = stats.get(vidid)
                     title = (details["title"][:35]).title()
                     if vidid == "telegram":
-                        msg += f"🔗[ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs ᴀɴᴅ ᴀᴜᴅɪᴏs]({config.SUPPORT_GROUP})  played {count} ᴛɪᴍᴇs\n\n"
+                        msg += f"<blockquote>🔗[ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs ᴀɴᴅ ᴀᴜᴅɪᴏs]({config.SUPPORT_GROUP})  played {count} ᴛɪᴍᴇs\n\n</blockquote>"
                     else:
-                        msg += f"🔗 [{title}](https://www.youtube.com/watch?v={vidid})  played {count} times\n\n"
+                        msg += f"<blockquote>🔗 [{title}](https://www.youtube.com/watch?v={vidid})  played {count} times\n\n</blockquote>"
                 msg = _["ustats_2"].format(tot, tota, limit) + msg
                 return videoid, msg
 
@@ -142,7 +142,7 @@ async def start_comm(client, message: Message, _):
                 sender_name = message.from_user.first_name
                 return await app.send_message(
                     config.LOG_GROUP_ID,
-                    f"{message.from_user.mention} baru saja memulai bot <code>list sudo </code>\n\n : {sender_id}\nUser name: {sender_name}",
+                    f"<blockquote expandable>{message.from_user.mention} baru saja memulai bot <code>list sudo </code>\n\n : {sender_id}\nUser name: {sender_name}</blockquote>",
                 )
             return
         if name[0:3] == "lyr":
@@ -159,7 +159,7 @@ async def start_comm(client, message: Message, _):
             await del_plist_msg(client=client, message=message, _=_)
             await asyncio.sleep(1)
         if name[0:3] == "inf":
-            m = await message.reply_text("🔎 ғᴇᴛᴄʜɪɴɢ ɪɴғᴏ!")
+            m = await message.reply_text("<blockquote>🔎 ғᴇᴛᴄʜɪɴɢ ɪɴғᴏ!</blockquote>")
             query = (str(name)).replace("info_", "", 1)
             query = f"https://www.youtube.com/watch?v={query}"
             results = VideosSearch(query, limit=1)
@@ -173,7 +173,7 @@ async def start_comm(client, message: Message, _):
                 link = result["link"]
                 published = result["publishedTime"]
             searched_text = f"""
-🔍__ᴠɪᴅᴇᴏ ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ__
+<blockquote expandable>🔍__ᴠɪᴅᴇᴏ ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ__
 
 ❇️ᴛɪᴛʟᴇ: {title}
 
@@ -182,7 +182,7 @@ async def start_comm(client, message: Message, _):
 ⏰ᴘᴜʙʟɪsʜᴇᴅ ᴛɪᴍᴇ: {published}
 🎥ᴄʜᴀɴɴᴇʟ ɴᴀᴍᴇ: {channel}
 📎ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ: [ᴠɪsɪᴛ ғʀᴏᴍ ʜᴇʀᴇ]({channellink})
-🔗ᴠɪᴅᴇᴏ ʟɪɴᴋ: [ʟɪɴᴋ]({link})
+🔗ᴠɪᴅᴇᴏ ʟɪɴᴋ: [ʟɪɴᴋ]({link})</blockquote>
 """
             key = InlineKeyboardMarkup(
                 [
@@ -206,7 +206,7 @@ async def start_comm(client, message: Message, _):
                 sender_name = message.from_user.first_name
                 return await app.send_message(
                     config.LOG_GROUP_ID,
-                    f"{message.from_user.mention} baru saja memulai botb<code>Info video </code>\n\nUser ID: {sender_id}\nUser name {sender_name}",
+                    f"<blockquote expandable>{message.from_user.mention} baru saja memulai botb<code>Info video </code>\n\nUser ID: {sender_id}\nUser name {sender_name}</blockquote>",
                 )
     else:
         try:
@@ -241,7 +241,7 @@ async def start_comm(client, message: Message, _):
             sender_name = message.from_user.first_name
             return await app.send_message(
                 config.LOG_GROUP_ID,
-                f"{message.from_user.mention} memulai bot \n\nUser ID : {sender_id}\nUser name: {sender_name}",
+                f"<blockquote expandable>{message.from_user.mention} memulai bot \n\nUser ID : {sender_id}\nUser name: {sender_name}</blockquote>",
             )
 
 
@@ -271,7 +271,7 @@ async def welcome(client, message: Message):
     if config.PRIVATE_BOT_MODE == str(True):
         if not await is_served_private_chat(message.chat.id):
             await message.reply_text(
-                "mode pribadi bot ini telah diaktifkan hanya pemilik saya yang dapat menggunakan ini jika Anda ingin menggunakan ini dalam obrolan Anda, jadi katakan kepada pemilik saya untuk mengotorisasi obrolan Anda"
+                "<blockquote expandable>mode pribadi bot ini telah diaktifkan hanya pemilik saya yang dapat menggunakan ini jika Anda ingin menggunakan ini dalam obrolan Anda, jadi katakan kepada pemilik saya untuk mengotorisasi obrolan </blockquote>"
             )
             return await app.leave_chat(message.chat.id)
     else:
@@ -317,7 +317,7 @@ async def welcome(client, message: Message):
 
 
 __MODULE__ = "Bots"
-__HELP__ = """<blockquote><b>
+__HELP__ = """<blockquote expandable><b>
 
 /stats - Gᴇᴛ Tᴏᴘ 𝟷𝟶 Tʀᴀᴄᴋs Gʟᴏʙᴀʟ Sᴛᴀᴛs, Tᴏᴘ 𝟷𝟶 Usᴇʀs ᴏғ ʙᴏᴛ, Tᴏᴘ 𝟷𝟶 Cʜᴀᴛs ᴏɴ ʙᴏᴛ, Tᴏᴘ 𝟷𝟶 Pʟᴀʏᴇᴅ ɪɴ ᴀ ᴄʜᴀᴛ ᴇᴛᴄ ᴇᴛᴄ.
 
