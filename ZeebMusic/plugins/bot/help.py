@@ -67,7 +67,7 @@ async def help_parser(name, keyboard=None):
     if not keyboard:
         keyboard = InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help"))
     return (
-        f"""<blockquote><b>Hi {name},
+        f"""<blockquote expandable><b>Hi {name},
 klik tombol di bawah ini untuk informasi lebih lanjut\nsemua perintah dimulai dengan: /</b></blockquote>
 """,
         keyboard,
@@ -83,7 +83,7 @@ async def help_button(client, query):
     back_match = re.match(r"help_back\((\d+)\)", query.data)
     create_match = re.match(r"help_create", query.data)
 
-    top_text = f"""<blockquote><b>Hai {query.from_user.mention},
+    top_text = f"""<blockquote expandable><b>Hai {query.from_user.mention},
 
 klik tombol di bawah ini untuk informasi lebih lanjut\nsemua perintah dimulai dengan: /</b></blockquote>
 """
