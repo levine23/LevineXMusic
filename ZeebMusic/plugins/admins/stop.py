@@ -4,6 +4,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 from config import BANNED_USERS, CHANNEL_USERNAME
+from ZeebMusic.utils.decorators import require_fsub
 from ZeebMusic import app
 from ZeebMusic.core.call import Zb
 from ZeebMusic.utils.database import (
