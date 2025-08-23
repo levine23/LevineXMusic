@@ -573,34 +573,42 @@ class Call(PyTgCalls):
         @self.four.on_update(filters.chat_update(ChatUpdate.Status.LEFT_CALL))
         @self.five.on_update(filters.chat_update(ChatUpdate.Status.LEFT_CALL))
         async def stream_services_handler(_, chat_id: int):
-            await self.stop_stream(chat_id)
+           await self.stop_stream(chat_id)
 
-@self.one.on_update(filters.stream_end)
-@self.two.on_update(filters.stream_end)
-@self.three.on_update(filters.stream_end)
-@self.four.on_update(filters.stream_end)
-@self.five.on_update(filters.stream_end)
-async def stream_end_handler1(client, update: Update):
-    chat_id = update.chat_id
-    try:
-        check = db.get(chat_id)
-        if not check or len(check) == 0:
-            await _clear_(chat_id)
-            await client.leave_call(chat_id)
-            print(f"[AutoLeave] Assistant keluar otomatis dari VC {chat_id}")
-        else:
-            # lanjut ke lagu berikutnya
-            await self.play(client, chat_id)
-    except Exception as e:
-        print(f"[StreamEnd ERROR] {e}")
-                return
+        # Handler: Saat stream berakhir
+        @self.one.on_update(filters.stream_end)
+        @self.two.on_update(filters.stream_end)
+        @self.three.on_update(filters.stream_end)
+        @self.four.on_update(filters.stream_end)
+        @self.five.on_update(filters.stream_end)
+        async def stream_end_handler1(client, update: Update):
+            chat_id = update.chat_id
+            try:
+                check = db.get(chat_id)
+                if not check or len(check) == 0:
+                    await self._clear_(chat_id)
+                    await client.leave_call(chat_id)
+                    print(f"[AutoLeave] Assistant keluar otomatis dari VC {chat_id}")
+                else:
+                    # lanjut ke lagu berikutnya
+                    await self.play(client, chat_id)
+            except Exception as e:
+                print(f"[StreamEnd ERROR] {e}")
+
+        # Handler: Hitung participant (autoend timer)
+        @self.one.on_update(filters.participant_updated)
+        @self.two.on_update(filters.participant_updated)
+        @self.three.on_update(filters.participant_updated)
+        @self.four.on_update(filters.participant_updated)
+        @self.five.on_update(filters.participant_updated)
+        async def participants_handler(client, update: Update):
             chat_id = update.chat_id
             users = counter.get(chat_id)
             if not users:
                 try:
                     got = len(await client.get_participants(chat_id))
-                except:
-
+                except Exception:
+                    return
                 counter[chat_id] = got
                 if got == 1:
                     autoend[chat_id] = datetime.now() + timedelta(minutes=AUTO_END_TIME)
