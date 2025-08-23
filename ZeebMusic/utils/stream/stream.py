@@ -108,11 +108,11 @@ async def stream(
                     original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-                        title[:27],
-                        f"https://t.me/{app.username}?start=info_{vidid}",
-                        duration_min,
-                        user_name,
-                    ),
+    details["title"],   # {0} = Judul
+    details["link"],    # {1} = Link ke track
+    details["duration"],# {2} = Durasi
+    user_name           # {3} = Nama user yang request
+),
                     reply_markup=InlineKeyboardMarkup(button),
                 )
                 db[chat_id][0]["mystic"] = run
@@ -195,11 +195,11 @@ async def stream(
                     original_chat_id,
                     photo=img,
                     caption=_["stream_1"].format(
-            details["title"],
-            details["link"],
-            details["duration],
-            user_name
-            ),
+    details["title"],   # {0} = Judul
+    details["link"],    # {1} = Link ke track
+    details["duration"],# {2} = Durasi
+    user_name           # {3} = Nama user yang request
+),
                     reply_markup=InlineKeyboardMarkup(button),
                 )
                 db[chat_id][0]["mystic"] = run
