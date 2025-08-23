@@ -228,7 +228,7 @@ queue_4 : "<blockquote><b>⏳ Ditambahkan ke Antrian di **#{0}\n\nJudul:** {1}\n
 queue_5 : "<blockquote><b>Hanya satu track di dalam antrian, Silahkan tambahkan lagi untuk check list</b></blockquote>"
 
 # All Streaming Lines
-stream_1 : "<blockquote>Memulai Streaming \n\n🎶 <b>{0}</b>\n⏳ Durasi: {2}\n👤 Diminta oleh: {1}</blockquote>"
+stream_1 : "<blockquote>⛥Memulai Streaming⛥\n\n Judul➭ <a href='{1}'>{0}</a>\n Durasi➭ {2}\n Diminta oleh➭ {3}</blockquote>"
 stream_2 : "<blockquote>🎙️ **Memulai Streaming melalui URL ** \n\n👤 **Diminta Oleh:** {0} </b></blockquote>"
 stream_3 : "<blockquote>🎙️ **Memulai Streaming** \n\n**🏷Judul:** {0}\n⌛️**Durasi**: {1}\n👤**Diminta Oleh:** {2} </b></blockquote>"
 stream_4 : "<blockquote>🎙️ **Memulai Streaming** \n\n**🏷Judul:** [{0}]({1})\n⌛️ **Durasi**: {2}\n👤 **Diminta Oleh:** {3} </b></blockquote>"
