@@ -83,17 +83,17 @@ async def ping_com(client, message: Message, _):
         else:
             IMAGE = get_image(videoid)
     send = (
-        "**⌛️ᴅᴜʀᴀᴛɪᴏɴ:** ᴜɴᴋɴᴏᴡɴ ᴅᴜʀᴀᴛɪᴏɴ sᴛʀᴇᴀᴍ \n\nᴄʟɪᴄᴋ ᴏɴ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟʀ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ."
+        "<blockquote>**⌛️ᴅᴜʀᴀᴛɪᴏɴ:** ᴜɴᴋɴᴏᴡɴ ᴅᴜʀᴀᴛɪᴏɴ sᴛʀᴇᴀᴍ \n\nᴄʟɪᴄᴋ ᴏɴ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟʀ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ.</blockquote>"
         if DUR == "Unknown"
-        else "\nᴄʟɪᴄᴋ ᴏɴ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟʀ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ."
+        else "<blockquote>\nᴄʟɪᴄᴋ ᴏɴ ʙᴜᴛᴛᴏɴ ʙᴇʟᴏᴡ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟʀ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ.</blockquote>"
     )
-    cap = f"""**{app.mention} ᴘʟᴀʏᴇʀ**
+    cap = f"""<blockquote>**{app.mention} ᴘʟᴀʏᴇʀ**
 
 🎥**ᴘʟᴀʏɪɴɢ:** {title}
 
 🔗**sᴛʀᴇᴀᴍ ᴛʏᴘᴇ:** {typo}
 🙍‍♂️**ᴘʟᴀʏᴇᴅ ʙʏ:** {user}
-{send}"""
+{send}</blockquote>"""
     upl = (
         queue_markup(_, DUR, "c" if cplay else "g", videoid)
         if DUR == "Unknown"
@@ -175,11 +175,11 @@ async def queued_tracks(client, CallbackQuery: CallbackQuery, _):
     for x in got:
         j += 1
         if j == 1:
-            msg += f'ᴄᴜʀʀᴇɴᴛ ᴘʟᴀʏɪɴɢ:\n\n🏷ᴛɪᴛʟᴇ: {x["title"]}\nᴅᴜʀᴀᴛɪᴏɴ: {x["dur"]}\nʙʏ: {x["by"]}\n\n'
+            msg += f'<blockquote expandable>ᴄᴜʀʀᴇɴᴛ ᴘʟᴀʏɪɴɢ:\n\n🏷ᴛɪᴛʟᴇ: {x["title"]}\nᴅᴜʀᴀᴛɪᴏɴ: {x["dur"]}\nʙʏ: {x["by"]}\n\n</blockquote>'
         elif j == 2:
-            msg += f'ǫᴜᴇᴜᴇᴅ:\n\n🏷ᴛɪᴛʟᴇ: {x["title"]}\nᴅᴜʀᴀᴛɪᴏɴ: {x["dur"]}\nʙʏ: {x["by"]}\n\n'
+            msg += f'<blockquote expandable>ǫᴜᴇᴜᴇᴅ:\n\n🏷ᴛɪᴛʟᴇ: {x["title"]}\nᴅᴜʀᴀᴛɪᴏɴ: {x["dur"]}\nʙʏ: {x["by"]}\n\n</blockquote>'
         else:
-            msg += f'🏷ᴛɪᴛʟᴇ: {x["title"]}\nᴅᴜʀᴀᴛɪᴏɴ: {x["dur"]}\nʙʏ: {x["by"]}\n\n'
+            msg += f'<blockquote expandable>🏷ᴛɪᴛʟᴇ: {x["title"]}\nᴅᴜʀᴀᴛɪᴏɴ: {x["dur"]}\nʙʏ: {x["by"]}\n\n</blockquote>'
     if "Queued" in msg:
         if len(msg) < 700:
             await asyncio.sleep(1)
@@ -233,17 +233,17 @@ async def queue_back(client, CallbackQuery: CallbackQuery, _):
         else:
             IMAGE = get_image(videoid)
     send = (
-        "**⌛️ᴅᴜʀᴀᴛɪᴏɴ:** ᴜɴᴋɴᴏᴡɴ ᴅᴜʀᴀᴛɪᴏɴ sᴛʀᴇᴀᴍ \n\nᴄʟɪᴄᴋ ᴏɴ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟᴇ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ."
+        "<blockquote>**⌛️ᴅᴜʀᴀᴛɪᴏɴ:** ᴜɴᴋɴᴏᴡɴ ᴅᴜʀᴀᴛɪᴏɴ sᴛʀᴇᴀᴍ \n\nᴄʟɪᴄᴋ ᴏɴ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟᴇ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ.</blockquote>"
         if DUR == "Unknown"
-        else "\nᴄʟɪᴄᴋ ᴏɴ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟᴇ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ."
+        else "<blockquote>\nᴄʟɪᴄᴋ ᴏɴ ʙᴇʟᴏᴡ ʙᴜᴛᴛᴏɴ ᴛᴏ ɢᴇᴛ ᴡʜᴏʟᴇ ǫᴜᴇᴜᴇᴅ ʟɪsᴛ.</blockquote>"
     )
-    cap = f"""**{app.mention} ᴘʟᴀʏᴇʀ**
+    cap = f"""<blockquote>**{app.mention} ᴘʟᴀʏᴇʀ**
 
 🎥**ᴘʟᴀʏɪɴɢ:** {title}
 
 🔗**sᴛʀᴇᴀᴍ ᴛʏᴘᴇ:** {typo}
 🙍‍♂️**ᴘʟᴀʏᴇᴅ ʙʏ :** {user}
-{send}"""
+{send}</blockquote>"""
     upl = (
         queue_markup(_, DUR, cplay, videoid)
         if DUR == "Unknown"
