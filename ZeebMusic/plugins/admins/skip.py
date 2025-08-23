@@ -3,7 +3,7 @@ from pyrogram.types import InlineKeyboardMarkup, Message
 
 import config
 from config import BANNED_USERS, CHANNEL_USERNAME
-from ZeebMusic.utils.decorators import require_fsub
+from ZeebMusic.utils.decorators.fsub import require_fsub
 from strings import get_command
 from ZeebMusic import YouTube, app
 from ZeebMusic.core.call import Zb
