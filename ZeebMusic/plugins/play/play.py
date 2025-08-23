@@ -7,6 +7,7 @@ from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
 from config import BANNED_USERS, CHANNEL_USERNAME, lyrical
+from ZeebMusic.utils.decorators import require_fsub
 from ZeebMusic import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
 from ZeebMusic.core.call import Zb
 from ZeebMusic.utils import seconds_to_min, time_to_seconds
