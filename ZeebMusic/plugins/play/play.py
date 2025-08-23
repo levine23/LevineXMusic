@@ -6,7 +6,7 @@ from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
 from pytgcalls.exceptions import NoActiveGroupCall
 
 import config
-from config import BANNED_USERS, lyrical
+from config import BANNED_USERS, CHANNEL_USERNAME, lyrical
 from ZeebMusic import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
 from ZeebMusic.core.call import Zb
 from ZeebMusic.utils import seconds_to_min, time_to_seconds
@@ -44,6 +44,7 @@ from ZeebMusic.utils.stream.stream import stream
     & filters.group
     & ~BANNED_USERS
 )
+@require_fsub
 @PlayWrapper
 async def play_commnd(
     client,
