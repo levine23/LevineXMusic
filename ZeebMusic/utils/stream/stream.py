@@ -95,6 +95,7 @@ async def stream(
                     original_chat_id,
                     file_path if direct else f"vid_{vidid}",
                     title,
+                    link,
                     duration_min,
                     user_name,
                     vidid,
@@ -110,7 +111,7 @@ async def stream(
                     caption=_["stream_1"].format(
     title,   # {0} = Judul
     link,    # {1} = Link ke track
-    duration,# {2} = Durasi
+    duration_min,# {2} = Durasi
     user_name           # {3} = Nama user yang request
 ),
                     reply_markup=InlineKeyboardMarkup(button),
@@ -153,6 +154,7 @@ async def stream(
                 original_chat_id,
                 file_path if direct else f"vid_{vidid}",
                 title,
+                link,
                 duration_min,
                 user_name,
                 vidid,
@@ -197,7 +199,7 @@ async def stream(
                     caption=_["stream_1"].format(
     title,   # {0} = Judul
     link,    # {1} = Link ke track
-    duration,# {2} = Durasi
+    duration_min,# {2} = Durasi
     user_name           # {3} = Nama user yang request
 ),
                     reply_markup=InlineKeyboardMarkup(button),
@@ -346,6 +348,7 @@ async def stream(
                 original_chat_id,
                 f"live_{vidid}",
                 title,
+                link,
                 duration_min,
                 user_name,
                 vidid,
@@ -359,11 +362,11 @@ async def stream(
                 original_chat_id,
                 photo=img,
                 caption=_["stream_1"].format(
-                    title[:27],
-                    f"https://t.me/{app.username}?start=info_{vidid}",
-                    duration_min,
-                    user_name,
-                ),
+    title,   # {0} = Judul
+    link,    # {1} = Link ke track
+    duration_min,# {2} = Durasi
+    user_name           # {3} = Nama user yang request
+),
                 reply_markup=InlineKeyboardMarkup(button),
             )
             db[chat_id][0]["mystic"] = run
