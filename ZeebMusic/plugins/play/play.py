@@ -57,8 +57,8 @@ async def play_commnd(
     fplay,
 ):
     mystic = await message.reply_text(_["play_2"])
-    else:
-        mystic = await message.reply_stiker(_["play_1"])
+else:
+    mystic = await message.reply_stiker(_["play_1"])
     plist_id = None
     slider = None
     plist_type = None
