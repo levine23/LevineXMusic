@@ -43,7 +43,7 @@ async def inline_query_handler(client, query):
                 ]
             )
             searched_text = f"""
-❇️**ᴛɪᴛʟᴇ:** [{title}]({link})
+<blockquote expandable>❇️**ᴛɪᴛʟᴇ:** [{title}]({link})
 
 ⏳**ᴅᴜʀᴀᴛɪᴏɴ:** {duration} Mins
 👀**ᴠɪᴇᴡs:** `{views}`
@@ -53,7 +53,7 @@ async def inline_query_handler(client, query):
 
 __ʀᴇᴘʟʏ ᴡɪᴛʜ /play ᴏɴ ᴛʜɪs sᴇᴀʀᴄʜᴇᴅ ᴍᴇssᴀɢᴇ ᴛᴏ sᴛʀᴇᴀᴍ ɪᴛ ᴏɴ ᴠᴏɪᴄᴇᴄʜᴀᴛ.__
 
-⚡️ ** ɪɴʟɪɴᴇ sᴇᴀʀᴄʜ ʙʏ {app.mention} **"""
+⚡️ ** ɪɴʟɪɴᴇ sᴇᴀʀᴄʜ ʙʏ {app.mention} **</blockquote>"""
             answers.append(
                 InlineQueryResultPhoto(
                     photo_url=thumbnail,
