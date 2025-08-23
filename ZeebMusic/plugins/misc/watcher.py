@@ -15,4 +15,4 @@ async def force_stop_stream(_, message: Message):
                 return await Zb.force_stop_stream(message.chat.id)
         await Zb.force_stop_stream(message.chat.id)
     except Exception as e:
-        await app.send_message(LOG_GROUP_ID, f"error in wathcher.py error is {e}")
+        await app.send_message(LOG_GROUP_ID, f"<blockquote>error in wathcher.py error is {e}</blockquote>")
