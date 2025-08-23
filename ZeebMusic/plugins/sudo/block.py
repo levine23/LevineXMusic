@@ -80,7 +80,7 @@ async def sudoers_list(client, message: Message, _):
             count += 1
         except Exception:
             continue
-        msg += f"{count}➤ {user}\n"
+        msg += f"<blockquote>{count}➤ {user}\n</blockquote>"
     if count == 0:
         return await mystic.edit_text(_["block_5"])
     else:
@@ -88,7 +88,7 @@ async def sudoers_list(client, message: Message, _):
 
 
 __MODULE__ = "Blist"
-__HELP__ = """<<blockquote><b>⚠️<u>Bʟᴀᴄᴋʟɪsᴛ Cʜᴀᴛ Fᴜɴᴄᴛɪᴏɴ:</u>
+__HELP__ = """<<blockquote expandable><b>⚠️<u>Bʟᴀᴄᴋʟɪsᴛ Cʜᴀᴛ Fᴜɴᴄᴛɪᴏɴ:</u>
 /blacklistchat [CHAT_ID] - Bʟᴀᴄᴋʟɪsᴛ ᴀɴʏ ᴄʜᴀᴛ ғʀᴏᴍ ᴜsɪɴɢ Mᴜsɪᴄ Bᴏᴛ
 /whitelistchat [CHAT_ID] - Wʜɪᴛᴇʟɪsᴛ ᴀɴʏ ʙʟᴀᴄᴋʟɪsᴛᴇᴅ ᴄʜᴀᴛ ғʀᴏᴍ ᴜsɪɴɢ Mᴜsɪᴄ Bᴏᴛ
 /blacklistedchat - Cʜᴇᴄᴋ ᴀʟʟ ʙʟᴀᴄᴋʟɪsᴛᴇᴅ ᴄʜᴀᴛs.
