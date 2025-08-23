@@ -135,14 +135,14 @@ async def authusers(client, message: Message, _):
                 j += 1
             except Exception:
                 continue
-            text += f"{j}➤ {user}[`{user_id}`]\n"
-            text += f"   {_['auth_8']} {admin_name}[`{admin_id}`]\n\n"
+            text += f"<blockquote>{j}➤ {user}[`{user_id}`]\n"
+            text += f"   {_['auth_8']} {admin_name}[`{admin_id}`]\n\n</blockquote>"
         await mystic.delete()
         await message.reply_text(text)
 
 
 __MODULE__ = "Auth"
-__HELP__ = """<blockquote><b><b><u>Aᴜᴛʜ Usᴇʀs:</u></b>
+__HELP__ = """<blockquote expandable><b><b><u>Aᴜᴛʜ Usᴇʀs:</u></b>
 Aᴜᴛʜ Usᴇʀs ᴄᴀɴ ᴜsᴇ ᴀᴅᴍɪɴ ᴄᴏᴍᴍᴀɴᴅs ᴡɪᴛʜᴏᴜᴛ ᴀᴅᴍɪɴ ʀɪɢʜᴛs ɪɴ ʏᴏᴜʀ ᴄʜᴀᴛ.
 
 /auth [Usᴇʀɴᴀᴍᴇ] - Aᴅᴅ ᴀ ᴜsᴇʀ ᴛᴏ AUTH LIST ᴏғ ᴛʜᴇ ɢʀᴏᴜᴘ.
