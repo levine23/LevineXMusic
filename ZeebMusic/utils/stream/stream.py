@@ -18,7 +18,7 @@ from ZeebMusic.utils.inline.play import queue_markup, stream_markup, telegram_ma
 from ZeebMusic.utils.inline.playlist import close_markup
 from ZeebMusic.utils.pastebin import Zbbin
 from ZeebMusic.utils.stream.queue import put_queue, put_queue_index
-from ZeebMusic.utils.thumbnails import gen_qthumb, gen_thumb
+from ZeebMusic.utils.thumbnails import gen_qthumb, get_thumb
 
 
 async def stream(
