@@ -177,29 +177,31 @@ class Call(PyTgCalls):
             pass
 
     async def skip_stream(
-        self,
-        chat_id: int,
-        link: str,
-        video: Union[bool, str] = None,
-        image: Union[bool, str] = None,
+    self,
+    chat_id: int,
+    link: str,
+    video: Union[bool, str] = None,
+    image: Union[bool, str] = None,
 ):
-        assistant = await group_assistant(self, chat_id)
+    assistant = await group_assistant(self, chat_id)
 
     # Buang lagu lama dari queue
-        check = db.get(chat_id)
-        if check:
+    check = db.get(chat_id)
+    if check:
+        try:
+            popped = check.pop(0)
+            if popped:
+                await auto_clean(popped)   # bersihkan file lama
+        except:
+            pass
+        if not check:  # kalau queue kosong, stop stream
+            await _clear_(chat_id)
             try:
-               popped = check.pop(0)
-               if popped:
-                   await auto_clean(popped)   # bersihkan file lama
+                return await assistant.leave_group_call(chat_id)
             except:
-                pass
-            if not check:  # kalau queue kosong, stop stream
-                await _clear_(chat_id)
-                try:
-                   return await assistant.leave_group_call(chat_id)
-                except:
-                    return
+                return
+
+    # Ambil kualitas audio/video
     audio_stream_quality = await get_audio_bitrate(chat_id)
     video_stream_quality = await get_video_bitrate(chat_id)
 
