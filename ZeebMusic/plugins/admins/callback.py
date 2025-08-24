@@ -11,10 +11,10 @@ from config import (
     TELEGRAM_VIDEO_URL,
     adminlist,
 )
-from ChampuMusic import YouTube, app
-from ChampuMusic.core.call import Champu
-from ChampuMusic.misc import SUDOERS, db
-from ChampuMusic.utils.database import (
+from ZeebMusic import YouTube, app
+from ZeebMusic.core.call import Champu
+from ZeebMusic.misc import SUDOERS, db
+from ZeebMusic.utils.database import (
     is_active_chat,
     is_music_playing,
     is_muted,
@@ -25,9 +25,9 @@ from ChampuMusic.utils.database import (
     mute_on,
     set_loop,
 )
-from ChampuMusic.utils.decorators.language import languageCB
-from ChampuMusic.utils.formatters import seconds_to_min
-from ChampuMusic.utils.inline import (
+from ZeebMusic.utils.decorators.language import languageCB
+from ZeebMusic.utils.formatters import seconds_to_min
+from ZeebMusic.utils.inline import (
     close_markup,
     panel_markup_1,
     panel_markup_2,
@@ -37,9 +37,9 @@ from ChampuMusic.utils.inline import (
     stream_markup,
     stream_markup2,
 )
-from ChampuMusic.utils.inline.play import stream_markup
-from ChampuMusic.utils.stream.autoclear import auto_clean
-from ChampuMusic.utils.thumbnails import get_thumb
+from ZeebMusic.utils.inline.play import stream_markup
+from ZeebMusic.utils.stream.autoclear import auto_clean
+from ZeebMusic.utils.thumbnails import get_thumb
 
 wrong = {}
 downvote = {}
