@@ -12,6 +12,7 @@ LOOP_COMMAND = get_command("LOOP_COMMAND")
 
 
 @app.on_message(filters.command(LOOP_COMMAND) & filters.group & ~BANNED_USERS)
+@AdminRightsCheck
 async def admins(cli, message: Message, _, chat_id):
     usage = _["admin_24"]
     if len(message.command) != 2:
