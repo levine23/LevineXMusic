@@ -35,22 +35,6 @@ from .help import help_parser
 loop = asyncio.get_running_loop()
 
 
-@app.on_message(group=-1)
-async def ban_new(client, message):
-    user_id = (
-        message.from_user.id if message.from_user and message.from_user.id else 777000
-    )
-    chat_name = message.chat.title if message.chat.title else ""
-    if await is_banned_user(user_id):
-        try:
-            alert_message = f"😳"
-            BAN = await message.chat.ban_member(user_id)
-            if BAN:
-                await message.reply_text(alert_message)
-        except:
-            pass
-
-
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_comm(client, message: Message, _):
