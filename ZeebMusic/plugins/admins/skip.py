@@ -88,14 +88,6 @@ async def skip(cli, message: Message, _, chat_id):
                 return await Zb.stop_stream(chat_id)
             except:
                 return
-
-        # 🔥 Tambahan fix: langsung lanjut ke lagu berikutnya
-        try:
-            return await Zb.change_stream(await group_assistant(Zb, chat_id), chat_id)
-        except Exception:
-            return await message.reply_text(_["call_7"])
-
-    # Bagian di bawah ini tidak akan dieksekusi setelah perbaikan di atas
     queued = check[0]["file"]
     title = (check[0]["title"]).title()
     user = check[0]["by"]
@@ -109,7 +101,7 @@ async def skip(cli, message: Message, _, chat_id):
         if n == 0:
             return await message.reply_text(_["admin_11"].format(title))
         try:
-            await Champu.skip_stream(chat_id, link, video=status)
+            await Zb.skip_stream(chat_id, link, video=status)
         except Exception:
             return await message.reply_text(_["call_7"])
         button = telegram_markup(_, chat_id)
