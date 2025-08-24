@@ -20,6 +20,21 @@ playlist = []
 # Playlist
 
 
+async def set_afk(user_id: int, reason: str):
+    from datetime import datetime
+    await afkdb.update_one(
+        {"user_id": user_id},
+        {"$set": {"reason": reason, "start": datetime.utcnow()}},
+        upsert=True
+    )
+
+async def get_afk(user_id: int):
+    return await afkdb.find_one({"user_id": user_id})
+
+async def remove_afk(user_id: int):
+    await afkdb.delete_one({"user_id": user_id})
+
+
 async def _get_playlists(chat_id: int) -> Dict[str, int]:
     _notes = await playlistdb.find_one({"chat_id": chat_id})
     if not _notes:
@@ -252,6 +267,7 @@ async def add_gban_user(user_id: int):
     return await gbansdb.insert_one({"user_id": user_id})
 
 
+
 async def remove_gban_user(user_id: int):
     is_gbanned = await is_gbanned_user(user_id)
     if not is_gbanned:
@@ -434,3 +450,75 @@ async def remove_banned_user(user_id: int):
     if not is_gbanned:
         return
     return await blockeddb.delete_one({"user_id": user_id})
+
+
+# ============================BROADCAST CHATS DB=============================#
+
+
+broadcast_db = mongodb.broadcast_stats
+
+
+async def save_broadcast_stats(sent: int, susr: int):
+    # Get current stats
+    current_stats = await broadcast_db.find_one({"_id": 1})
+
+    # Prepare update values
+    update_values = {}
+
+    # Update the group count only if sent is not None
+    if sent is not None:
+        update_values["sent"] = sent if sent > 0 else current_stats.get("sent", 0)
+
+    # Update the user count only if susr is not None
+    if susr is not None:
+        update_values["susr"] = susr if susr > 0 else current_stats.get("susr", 0)
+
+    # If update_values is not empty, update the document
+    if update_values:
+        await broadcast_db.update_one({"_id": 1}, {"$set": update_values}, upsert=True)
+
+
+async def get_broadcast_stats():
+    stats = await broadcast_db.find_one({"_id": 1})
+    return stats if stats else {}
+
+
+# ============================HOSTING BOTS DB=============================
+
+deploy_db = mongodb.deploy_stats  # MongoDB collection for deployment stats
+
+
+# Save app deployment by user ID
+async def save_app_info(user_id: int, app_name: str):
+    # Find if the user already has an entry in the DB
+    current_entry = await deploy_db.find_one({"_id": user_id})
+
+    if current_entry:
+        # Append the new app to the existing list if it's not already there
+        apps = current_entry.get("apps", [])
+        if app_name not in apps:
+            apps.append(app_name)
+        await deploy_db.update_one({"_id": user_id}, {"$set": {"apps": apps}})
+    else:
+        # Create a new entry if it doesn't exist
+        await deploy_db.insert_one({"_id": user_id, "apps": [app_name]})
+
+
+# Get deployed apps by user ID
+async def get_app_info(user_id: int):
+    user_apps = await deploy_db.find_one({"_id": user_id})
+    return user_apps.get("apps", []) if user_apps else []
+
+
+# Delete app deployment by user ID and app name
+async def delete_app_info(user_id: int, app_name: str):
+    current_entry = await deploy_db.find_one({"_id": user_id})
+
+    if current_entry:
+        apps = current_entry.get("apps", [])
+        if app_name in apps:
+            apps.remove(app_name)
+            # Update the DB with the new list of apps
+            await deploy_db.update_one({"_id": user_id}, {"$set": {"apps": apps}})
+            return True
+    return False
