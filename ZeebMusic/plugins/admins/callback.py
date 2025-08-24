@@ -12,7 +12,7 @@ from config import (
     adminlist,
 )
 from ZeebMusic import YouTube, app
-from ZeebMusic.core.call import Champu
+from ZeebMusic.core.call import Zb
 from ZeebMusic.misc import SUDOERS, db
 from ZeebMusic.utils.database import (
     is_active_chat,
