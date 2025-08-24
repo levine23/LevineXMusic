@@ -182,30 +182,49 @@ class Call(PyTgCalls):
         link: str,
         video: Union[bool, str] = None,
         image: Union[bool, str] = None,
-    ):
+):
         assistant = await group_assistant(self, chat_id)
-        audio_stream_quality = await get_audio_bitrate(chat_id)
-        video_stream_quality = await get_video_bitrate(chat_id)
-        if video:
+
+    # Buang lagu lama dari queue
+        check = db.get(chat_id)
+        if check:
+            try:
+               popped = check.pop(0)
+               if popped:
+                   await auto_clean(popped)   # bersihkan file lama
+            except:
+                pass
+            if not check:  # kalau queue kosong, stop stream
+                await _clear_(chat_id)
+                try:
+                   return await assistant.leave_group_call(chat_id)
+                except:
+                    return
+
+    # Ambil kualitas audio/video
+    audio_stream_quality = await get_audio_bitrate(chat_id)
+    video_stream_quality = await get_video_bitrate(chat_id)
+
+    # Buat stream baru
+    if video:
+        stream = MediaStream(
+            link,
+            audio_parameters=audio_stream_quality,
+            video_parameters=video_stream_quality,
+        )
+    else:
+        if image and config.PRIVATE_BOT_MODE == str(True):
             stream = MediaStream(
                 link,
+                image,
                 audio_parameters=audio_stream_quality,
                 video_parameters=video_stream_quality,
             )
         else:
-            if image and config.PRIVATE_BOT_MODE == str(True):
-                stream = MediaStream(
-                    link,
-                    image,
-                    audio_parameters=audio_stream_quality,
-                    video_parameters=video_stream_quality,
-                )
-            else:
-                stream = MediaStream(link, audio_parameters=audio_stream_quality)
-        await assistant.change_stream(
-            chat_id,
-            stream,
-        )
+            stream = MediaStream(link, audio_parameters=audio_stream_quality)
+
+    # Ganti stream ke lagu berikutnya
+    await assistant.change_stream(chat_id, stream)
 
     async def seek_stream(self, chat_id, file_path, to_seek, duration, mode):
         assistant = await group_assistant(self, chat_id)
