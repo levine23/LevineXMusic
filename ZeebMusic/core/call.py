@@ -581,52 +581,52 @@ class Call(PyTgCalls):
         @self.four.on_update(filters.stream_end)
         @self.five.on_update(filters.stream_end)
         async def stream_end_handler1(client, update: Update):
-    chat_id = update.chat_id
-    try:
-        check = db.get(chat_id)
-        if not check or len(check) == 0:
-            await _clear_(chat_id)
-            await client.leave_call(chat_id)
-            print(f"[AutoLeave] Assistant keluar otomatis dari VC {chat_id}")
-        else:
-            # hapus lagu yang barusan selesai
+            chat_id = update.chat_id
             try:
-                check.pop(0)
-            except Exception:
-                pass
+                check = db.get(chat_id)
+                if not check or len(check) == 0:
+                    await _clear_(chat_id)
+                    await client.leave_call(chat_id)
+                    print(f"[AutoLeave] Assistant keluar otomatis dari VC {chat_id}")
+                else:
+                    # hapus lagu yang barusan selesai
+                    try:
+                        check.pop(0)
+                    except Exception:
+                        pass
 
-            # cek apakah masih ada queue
-            if len(check) > 0:
-                await self.play(client, chat_id)
+                    # cek apakah masih ada queue
+                    if len(check) > 0:
+                        await self.play(client, chat_id)
+                    else:
+                        await _clear_(chat_id)
+                        await client.leave_call(chat_id)
+                        print(f"[AutoLeave] Queue habis, assistant keluar VC {chat_id}")
+            except Exception as e:
+                print(f"[StreamEnd ERROR] {e}")
+                return
+
+            users = counter.get(chat_id)
+            if not users:
+                try:
+                    got = len(await client.get_participants(chat_id))
+                except Exception:
+                    return
+                counter[chat_id] = got
+                if got == 1:
+                    autoend[chat_id] = datetime.now() + timedelta(minutes=AUTO_END_TIME)
+                    return
+                autoend[chat_id] = {}
             else:
-                await _clear_(chat_id)
-                await client.leave_call(chat_id)
-                print(f"[AutoLeave] Queue habis, assistant keluar VC {chat_id}")
-    except Exception as e:
-        print(f"[StreamEnd ERROR] {e}")
-        return
-
-    users = counter.get(chat_id)
-    if not users:
-        try:
-            got = len(await client.get_participants(chat_id))
-        except Exception:
-            return
-        counter[chat_id] = got
-        if got == 1:
-            autoend[chat_id] = datetime.now() + timedelta(minutes=AUTO_END_TIME)
-            return
-        autoend[chat_id] = {}
-    else:
-        final = (
-            users + 1
-            if isinstance(update, JoinedGroupCallParticipant)
-            else users - 1
-        )
-        counter[chat_id] = final
-        if final == 1:
-            autoend[chat_id] = datetime.now() + timedelta(minutes=AUTO_END_TIME)
-            return
-        autoend[chat_id] = {}
+                final = (
+                    users + 1
+                    if isinstance(update, JoinedGroupCallParticipant)
+                    else users - 1
+                )
+                counter[chat_id] = final
+                if final == 1:
+                    autoend[chat_id] = datetime.now() + timedelta(minutes=AUTO_END_TIME)
+                    return
+                autoend[chat_id] = {}
 
 Zb = Call()
