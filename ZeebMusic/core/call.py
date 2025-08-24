@@ -27,7 +27,7 @@ import config
 from strings import get_string
 from ZeebMusic import LOGGER, YouTube, app
 from ZeebMusic.misc import db
-from ZeebuMusic.utils.database import (
+from ZeebMusic.utils.database import (
     add_active_chat,
     add_active_video_chat,
     get_assistant,
@@ -46,7 +46,7 @@ from ZeebMusic.utils.exceptions import AssistantErr
 from ZeebMusic.utils.formatters import check_duration, seconds_to_min, speed_converter
 from ZeebMusic.utils.inline.play import stream_markup, telegram_markup
 from ZeebMusic.utils.stream.autoclear import auto_clean
-from ChampuMusic.utils.thumbnails import get_thumb
+from ZeebMusic.utils.thumbnails import get_thumb
 
 autoend = {}
 counter = {}
