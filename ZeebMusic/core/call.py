@@ -183,7 +183,8 @@ class Call(PyTgCalls):
 ):
         check = db.get(chat_id)
         if not check or len(check) < 2:
-        return await self.stop_stream(chat_id)
+        return await 
+self.stop_stream(chat_id)
 
         popped = check.pop(0)
         if popped:
