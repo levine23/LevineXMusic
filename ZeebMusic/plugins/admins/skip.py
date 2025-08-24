@@ -88,6 +88,14 @@ async def skip(cli, message: Message, _, chat_id):
                 return await Zb.stop_stream(chat_id)
             except:
                 return
+
+        # 🔥 Tambahan fix: langsung lanjut ke lagu berikutnya
+        try:
+            return await Zb.change_stream(await group_assistant(Zb, chat_id), chat_id)
+        except Exception:
+            return await message.reply_text(_["call_7"])
+
+    # Bagian di bawah ini tidak akan dieksekusi setelah perbaikan di atas
     queued = check[0]["file"]
     title = (check[0]["title"]).title()
     user = check[0]["by"]
@@ -208,4 +216,4 @@ async def skip(cli, message: Message, _, chat_id):
                 reply_markup=InlineKeyboardMarkup(button),
             )
             db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "stream" 
+            db[chat_id][0]["markup"] = "stream"
