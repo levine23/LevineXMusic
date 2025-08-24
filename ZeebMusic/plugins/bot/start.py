@@ -35,19 +35,38 @@ from .help import help_parser
 loop = asyncio.get_running_loop()
 
 
+@app.on_message(group=-1)
+async def ban_new(client, message):
+    user_id = (
+        message.from_user.id if message.from_user and message.from_user.id else 777000
+    )
+    chat_name = message.chat.title if message.chat.title else ""
+    if await is_banned_user(user_id):
+        try:
+            alert_message = f"😳"
+            BAN = await message.chat.ban_member(user_id)
+            if BAN:
+                await message.reply_text(alert_message)
+        except:
+            pass
+
+
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_comm(client, message: Message, _):
     chat_id = message.chat.id
     await add_served_user(message.from_user.id)
+    await message.react("😈")
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
+            keyboard = InlineKeyboardMarkup(
+                paginate_modules(0, HELPABLE, "help", close=True)
+            )
             if config.START_IMG_URL:
-                text, keyboard = await help_parser(message.from_user.mention)
                 return await message.reply_photo(
                     photo=START_IMG_URL,
-                    caption=text,
+                    caption=_["help_1"],
                     reply_markup=keyboard,
                 )
             else:
@@ -70,20 +89,8 @@ async def start_comm(client, message: Message, _):
                 parse_mode=ParseMode.HTML,
                 disable_web_page_preview=True,
             )
-        if name.startswith("note_"):
-            try:
-                (
-                    _,
-                    Gchat_id,
-                    text,
-                ) = name.split("_", 2)
-                logging.info(f"{Gchat_id} {text}")
-                await send_notes(message, Gchat_id, text)
-            except Exception as e:
-                logging.exception(e)
-
         if name[0:3] == "sta":
-            m = await message.reply_text("<blockquote>🔎 ғᴇᴛᴄʜɪɴɢ ʏᴏᴜʀ ᴘᴇʀsᴏɴᴀʟ sᴛᴀᴛs.!</blockquote>")
+            m = await message.reply_text("<blockquote>ғᴇᴛᴄʜɪɴɢ ʏᴏᴜʀ ᴘᴇʀsᴏɴᴀʟ sᴛᴀᴛs.!</blockquote>")
             stats = await get_userss(message.from_user.id)
             tot = len(stats)
             if not stats:
@@ -118,9 +125,9 @@ async def start_comm(client, message: Message, _):
                     details = stats.get(vidid)
                     title = (details["title"][:35]).title()
                     if vidid == "telegram":
-                        msg += f"<blockquote>🔗[ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs ᴀɴᴅ ᴀᴜᴅɪᴏs]({config.SUPPORT_GROUP})  played {count} ᴛɪᴍᴇs\n\n</blockquote>"
+                        msg += f"🔗[ᴛᴇʟᴇɢʀᴀᴍ ғɪʟᴇs ᴀɴᴅ ᴀᴜᴅɪᴏs]({config.SUPPORT_GROUP}) ** played {count} ᴛɪᴍᴇs**\n\n"
                     else:
-                        msg += f"<blockquote>🔗 [{title}](https://www.youtube.com/watch?v={vidid})  played {count} times\n\n</blockquote>"
+                        msg += f"🔗 [{title}](https://www.youtube.com/watch?v={vidid}) ** played {count} times**\n\n"
                 msg = _["ustats_2"].format(tot, tota, limit) + msg
                 return videoid, msg
 
@@ -134,15 +141,15 @@ async def start_comm(client, message: Message, _):
             await message.reply_photo(photo=thumbnail, caption=msg)
             return
         if name[0:3] == "sud":
-            await sudoers_list(client=client, message=message, _=_)
+            await sudoers_list(client=client, message=message)
             await asyncio.sleep(1)
             if await is_on_off(config.LOG):
                 sender_id = message.from_user.id
                 sender_mention = message.from_user.mention
                 sender_name = message.from_user.first_name
                 return await app.send_message(
-                    config.LOG_GROUP_ID,
-                    f"<blockquote expandable>{message.from_user.mention} baru saja memulai bot <code>list sudo </code>\n\n : {sender_id}\nUser name: {sender_name}</blockquote>",
+                    config.LOGGER_ID,
+                    f"<blockquote expandable>{message.from_user.mention} ʜᴀs ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <code>sᴜᴅᴏʟɪsᴛ </code>\n\n**ᴜsᴇʀ ɪᴅ :** {sender_id}\n**ᴜsᴇʀ ɴᴀᴍᴇ:** {sender_name}</blockquote>",
                 )
             return
         if name[0:3] == "lyr":
@@ -153,13 +160,13 @@ async def start_comm(client, message: Message, _):
                 await Telegram.send_split_text(message, lyrics)
                 return
             else:
-                await message.reply_text("ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇᴛ ʟʏʀɪᴄs.")
+                await message.reply_text("<blockquote>ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇᴛ ʟʏʀɪᴄs.</blockquote>")
                 return
         if name[0:3] == "del":
             await del_plist_msg(client=client, message=message, _=_)
             await asyncio.sleep(1)
         if name[0:3] == "inf":
-            m = await message.reply_text("<blockquote>🔎 ғᴇᴛᴄʜɪɴɢ ɪɴғᴏ!</blockquote>")
+            m = await message.reply_text("<blockquote>ғᴇᴛᴄʜɪɴɢ ɪɴғᴏ!</blockquote>")
             query = (str(name)).replace("info_", "", 1)
             query = f"https://www.youtube.com/watch?v={query}"
             results = VideosSearch(query, limit=1)
@@ -173,16 +180,16 @@ async def start_comm(client, message: Message, _):
                 link = result["link"]
                 published = result["publishedTime"]
             searched_text = f"""
-<blockquote expandable>🔍__ᴠɪᴅᴇᴏ ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ__
+<blockquote expandable>🔍__**ᴠɪᴅᴇᴏ ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ**__
 
-❇️ᴛɪᴛʟᴇ: {title}
+❇️**ᴛɪᴛʟᴇ:** {title}
 
-⏳ᴅᴜʀᴀᴛɪᴏɴ: {duration} Mins
-👀ᴠɪᴇᴡs: `{views}`
-⏰ᴘᴜʙʟɪsʜᴇᴅ ᴛɪᴍᴇ: {published}
-🎥ᴄʜᴀɴɴᴇʟ ɴᴀᴍᴇ: {channel}
-📎ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ: [ᴠɪsɪᴛ ғʀᴏᴍ ʜᴇʀᴇ]({channellink})
-🔗ᴠɪᴅᴇᴏ ʟɪɴᴋ: [ʟɪɴᴋ]({link})</blockquote>
+⏳**ᴅᴜʀᴀᴛɪᴏɴ:** {duration} Mins
+👀**ᴠɪᴇᴡs:** `{views}`
+⏰**ᴘᴜʙʟɪsʜᴇᴅ ᴛɪᴍᴇ:** {published}
+🎥**ᴄʜᴀɴɴᴇʟ ɴᴀᴍᴇ:** {channel}
+📎**ᴄʜᴀɴɴᴇʟ ʟɪɴᴋ:** [ᴠɪsɪᴛ ғʀᴏᴍ ʜᴇʀᴇ]({channellink})
+🔗**ᴠɪᴅᴇᴏ ʟɪɴᴋ:** [ʟɪɴᴋ]({link})</blockquote>
 """
             key = InlineKeyboardMarkup(
                 [
@@ -205,130 +212,176 @@ async def start_comm(client, message: Message, _):
                 sender_id = message.from_user.id
                 sender_name = message.from_user.first_name
                 return await app.send_message(
-                    config.LOG_GROUP_ID,
-                    f"<blockquote expandable>{message.from_user.mention} baru saja memulai botb<code>Info video </code>\n\nUser ID: {sender_id}\nUser name {sender_name}</blockquote>",
+                    config.LOGGER_ID,
+                    f"{message.from_user.mention} ʜᴀs ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ<code> ᴠɪᴅᴇᴏ ɪɴғᴏʀᴍᴀᴛɪᴏɴ </code>\n\n**ᴜsᴇʀ ɪᴅ:** {sender_id}\n**ᴜsᴇʀ ɴᴀᴍᴇ** {sender_name}",
                 )
     else:
+
         try:
-            await app.resolve_peer(OWNER_ID[0])
-            OWNER = OWNER_ID[0]
-        except:
-            OWNER = None
-        out = private_panel(_)
-        b = await message.reply_sticker(
-            "CAACAgUAAyEGAASjlTz-AAIadmhm6UTnrTw7dGNyscLoXBwT2Ks7AAKuEwACR-BhVhhAAw7FocTEHgQ"
+            out = music_start_panel(_)
+            if message.chat.photo:
+
+                userss_photo = await app.download_media(
+                    message.chat.photo.big_file_id,
+                )
+            else:
+                userss_photo = "assets/nodp.jpg"
+            if userss_photo:
+                chat_photo = userss_photo
+            chat_photo = userss_photo if userss_photo else START_IMG_URL
+
+        except AttributeError:
+            chat_photo = "assets/nodp.jpg"
+        await message.reply_photo(
+            photo=chat_photo,
+            caption=_["start_2"].format(message.from_user.mention, app.mention),
+            reply_markup=InlineKeyboardMarkup(out),
         )
-        if config.START_IMG_URL:
-            try:
-                await message.reply_photo(
-                    photo=config.START_IMG_URL,
-                    caption=_["start_1"].format(app.mention),
-                    reply_markup=InlineKeyboardMarkup(out),
-                )
-            except:
-                await message.reply_text(
-                    text=_["start_1"].format(app.mention),
-                    reply_markup=InlineKeyboardMarkup(out),
-                )
-        else:
-            await message.reply_text(
-                text=_["start_1"].format(app.mention),
-                reply_markup=InlineKeyboardMarkup(out),
-            )
-        await b.delete()
         if await is_on_off(config.LOG):
             sender_id = message.from_user.id
             sender_name = message.from_user.first_name
             return await app.send_message(
-                config.LOG_GROUP_ID,
-                f"<blockquote expandable>{message.from_user.mention} memulai bot \n\nUser ID : {sender_id}\nUser name: {sender_name}</blockquote>",
+                config.LOGGER_ID,
+                f"<blockquote expandable>{message.from_user.mention} ʜᴀs sᴛᴀʀᴛᴇᴅ ʙᴏᴛ. \n\n**ᴜsᴇʀ ɪᴅ :** {sender_id}\n**ᴜsᴇʀ ɴᴀᴍᴇ:** {sender_name}</blockquote>",
             )
 
 
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def testbot(client, message: Message, _):
-    out = alive_panel(_)
-    uptime = int(time.time() - _boot_)
-    chat_id = message.chat.id
-    if config.START_IMG_URL:
-        await message.reply_photo(
-            photo=config.START_IMG_URL,
-            caption=_["start_7"].format(app.mention, get_readable_time(uptime)),
-            reply_markup=InlineKeyboardMarkup(out),
-        )
-    else:
-        await message.reply_text(
-            text=_["start_7"].format(app.mention, get_readable_time(uptime)),
-            reply_markup=InlineKeyboardMarkup(out),
-        )
-    return await add_served_chat(message.chat.id)
+    try:
+        chat_id = message.chat.id
+        try:
+            # Try downloading the group's photo
+            groups_photo = await client.download_media(
+                message.chat.photo.big_file_id, file_name=f"chatpp{chat_id}.png"
+            )
+            chat_photo = groups_photo if groups_photo else START_IMG_URL
+        except AttributeError:
+            # If there's no chat photo, use the default image
+            chat_photo = START_IMG_URL
+
+        # Get the alive panel and uptime
+        out = alive_panel(_)
+        uptime = int(time.time() - _boot_)
+
+        # Send the response with the group photo or fallback to START_IMG_URL
+        if chat_photo:
+            await message.reply_photo(
+                photo=chat_photo,
+                caption=_["start_7"].format(client.mention, get_readable_time(uptime)),
+                reply_markup=InlineKeyboardMarkup(out),
+            )
+        else:
+            await message.reply_photo(
+                photo=config.START_IMG_URL,
+                caption=_["start_7"].format(client.mention, get_readable_time(uptime)),
+                reply_markup=InlineKeyboardMarkup(out),
+            )
+
+        # Add the chat to the served chat list
+        return await add_served_chat(chat_id)
+
+    except Exception as e:
+        print(f"Error: {e}")
 
 
-@app.on_message(filters.new_chat_members, group=-1)
+@app.on_message(filters.new_chat_members, group=3)
 async def welcome(client, message: Message):
     chat_id = message.chat.id
+
+    # Private bot mode check
     if config.PRIVATE_BOT_MODE == str(True):
-        if not await is_served_private_chat(message.chat.id):
+        if not await is_served_private_chat(chat_id):
             await message.reply_text(
-                "<blockquote expandable>mode pribadi bot ini telah diaktifkan hanya pemilik saya yang dapat menggunakan ini jika Anda ingin menggunakan ini dalam obrolan Anda, jadi katakan kepada pemilik saya untuk mengotorisasi obrolan </blockquote>"
+                "<blockquote expandable>**ᴛʜɪs ʙᴏᴛ's ᴘʀɪᴠᴀᴛᴇ ᴍᴏᴅᴇ ʜᴀs ʙᴇᴇɴ ᴇɴᴀʙʟᴇᴅ. ᴏɴʟʏ ᴍʏ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs. ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴜsᴇ ɪᴛ ɪɴ ʏᴏᴜʀ ᴄʜᴀᴛ, ᴀsᴋ ᴍʏ ᴏᴡɴᴇʀ ᴛᴏ ᴀᴜᴛʜᴏʀɪᴢᴇ ʏᴏᴜʀ ᴄʜᴀᴛ.**</blockquote>"
             )
-            return await app.leave_chat(message.chat.id)
+            return await client.leave_chat(chat_id)
     else:
         await add_served_chat(chat_id)
+
+    # Handle new chat members
     for member in message.new_chat_members:
         try:
-            language = await get_lang(message.chat.id)
+            language = await get_lang(chat_id)
             _ = get_string(language)
-            if member.id == app.id:
-                chat_type = message.chat.type
-                if chat_type != ChatType.SUPERGROUP:
-                    await message.reply_text(_["start_5"])
-                    return await app.leave_chat(message.chat.id)
-                if chat_id in await blacklisted_chats():
-                    await message.reply_text(
-                        _["start_6"].format(
-                            f"https://t.me/{app.username}?start=sudolist"
-                        )
+
+            # If bot itself joins the chat
+            if member.id == client.id:
+                try:
+                    groups_photo = await client.download_media(
+                        message.chat.photo.big_file_id, file_name=f"chatpp{chat_id}.png"
                     )
-                    return await app.leave_chat(chat_id)
-                userbot = await get_assistant(message.chat.id)
+                    chat_photo = groups_photo if groups_photo else START_IMG_URL
+                except AttributeError:
+                    chat_photo = START_IMG_URL
+
+                userbot = await get_assistant(chat_id)
                 out = start_pannel(_)
-                await message.reply_text(
-                    _["start_2"].format(
-                        app.mention,
-                        userbot.username,
-                        userbot.id,
-                    ),
+                await message.reply_photo(
+                    photo=chat_photo,
+                    caption=_["start_8"],
                     reply_markup=InlineKeyboardMarkup(out),
                 )
+
+            # Handle owner joining
             if member.id in config.OWNER_ID:
                 return await message.reply_text(
-                    _["start_3"].format(app.mention, member.mention)
+                    _["start_3"].format(client.mention, member.mention)
                 )
+
+            # Handle SUDOERS joining
             if member.id in SUDOERS:
                 return await message.reply_text(
-                    _["start_4"].format(app.mention, member.mention)
+                    _["start_4"].format(client.mention, member.mention)
                 )
             return
-        except:
 
+        except Exception as e:
+            print(f"Error: {e}")
             return
 
 
-__MODULE__ = "Bots"
-__HELP__ = """<blockquote expandable><b>
+@app.on_callback_query(filters.regex("go_to_start"))
+@LanguageStart
+async def go_to_home(client, callback_query: CallbackQuery, _):
+    out = music_start_panel(_)
+    await callback_query.message.edit_text(
+        text=_["start_2"].format(callback_query.message.from_user.mention, app.mention),
+        reply_markup=InlineKeyboardMarkup(out),
+    )
 
-/stats - Gᴇᴛ Tᴏᴘ 𝟷𝟶 Tʀᴀᴄᴋs Gʟᴏʙᴀʟ Sᴛᴀᴛs, Tᴏᴘ 𝟷𝟶 Usᴇʀs ᴏғ ʙᴏᴛ, Tᴏᴘ 𝟷𝟶 Cʜᴀᴛs ᴏɴ ʙᴏᴛ, Tᴏᴘ 𝟷𝟶 Pʟᴀʏᴇᴅ ɪɴ ᴀ ᴄʜᴀᴛ ᴇᴛᴄ ᴇᴛᴄ.
 
-/sudolist - Cʜᴇᴄᴋ Sᴜᴅᴏ Usᴇʀs ᴏғ Yᴜᴋᴋɪ Mᴜsɪᴄ Bᴏᴛ
+__MODULE__ = "Boᴛ"
+__HELP__ = f"""
+<blockquote expandable><n>c sᴛᴀɴᴅs ғᴏʀ ᴄʜᴀɴɴᴇʟ ᴘʟᴀʏ.</n>
 
-/lyrics [Mᴜsɪᴄ Nᴀᴍᴇ] - Sᴇᴀʀᴄʜᴇs Lʏʀɪᴄs ғᴏʀ ᴛʜᴇ ᴘᴀʀᴛɪᴄᴜʟᴀʀ Mᴜsɪᴄ ᴏɴ ᴡᴇʙ.
+<u>/stats</u>
+Gᴇᴛ Tᴏᴘ 𝟷𝟶 Tʀᴀᴄᴋs Gʟᴏʙᴀʟ Sᴛᴀᴛs, Tᴏᴘ 𝟷𝟶 Usᴇʀs ᴏғ ʙᴏᴛ, Tᴏᴘ 𝟷𝟶 Cʜᴀᴛs ᴏɴ ʙᴏᴛ, Tᴏᴘ 𝟷𝟶 Pʟᴀʏᴇᴅ ɪɴ ᴀ ᴄʜᴀᴛ ᴇᴛᴄ ᴇᴛᴄ.
 
-/song [Tʀᴀᴄᴋ Nᴀᴍᴇ] ᴏʀ [YT Lɪɴᴋ] - Dᴏᴡɴʟᴏᴀᴅ ᴀɴʏ ᴛʀᴀᴄᴋ ғʀᴏᴍ ʏᴏᴜᴛᴜʙᴇ ɪɴ ᴍᴘ𝟹 ᴏʀ ᴍᴘ𝟺 ғᴏʀᴍᴀᴛs.
+<u>/sudolist</u>
+Cʜᴇᴄᴋ Sᴜᴅᴏ Usᴇʀs ᴏғ Bᴏᴛ
 
-/player -  Gᴇᴛ ᴀ ɪɴᴛᴇʀᴀᴄᴛɪᴠᴇ Pʟᴀʏɪɴɢ Pᴀɴᴇʟ.
+<u>/lyrics [Mᴜsɪᴄ Nᴀᴍᴇ]</u>
+Sᴇᴀʀᴄʜᴇs Lʏʀɪᴄs ғᴏʀ ᴛʜᴇ ᴘᴀʀᴛɪᴄᴜʟᴀʀ Mᴜsɪᴄ ᴏɴ ᴡᴇʙ.
 
-c sᴛᴀɴᴅs ғᴏʀ ᴄʜᴀɴɴᴇʟ ᴘʟᴀʏ.
+<u>/song [Tʀᴀᴄᴋ Nᴀᴍᴇ] ᴏʀ [YT Lɪɴᴋ]</u>
+Dᴏᴡɴʟᴏᴀᴅ ᴀɴʏ ᴛʀᴀᴄᴋ ғʀᴏᴍ ʏᴏᴜᴛᴜʙᴇ ɪɴ ᴍᴘ𝟹 ᴏʀ ᴍᴘ𝟺 ғᴏʀᴍᴀᴛs.
 
-/queue ᴏʀ /cqueue - Cʜᴇᴄᴋ Qᴜᴇᴜᴇ Lɪsᴛ ᴏғ Mᴜsɪᴄ.</b></blockquote>"""
+<u>/player</u>
+Gᴇᴛ ᴀ ɪɴᴛᴇʀᴀᴄᴛɪᴠᴇ Pʟᴀʏɪɴɢ Pᴀɴᴇʟ.
+
+<u>/queue ᴏʀ /cqueue</u>
+Cʜᴇᴄᴋ Qᴜᴇᴜᴇ Lɪsᴛ ᴏғ Mᴜsɪᴄ.
+
+    <n>Pʀɪᴠᴀᴛᴇ Bᴏᴛ:</n>
+      
+<u>/authorize [CHAT_ID]</u>
+Aʟʟᴏᴡ ᴀ ᴄʜᴀᴛ ғᴏʀ ᴜsɪɴɢ ʏᴏᴜʀ ʙᴏᴛ.
+
+<u>/unauthorize[CHAT_ID]</u>
+Dɪsᴀʟʟᴏᴡ ᴀ ᴄʜᴀᴛ ғʀᴏᴍ ᴜsɪɴɢ ʏᴏᴜʀ ʙᴏᴛ.
+
+<u>/authorized</b>
+Cʜᴇᴄᴋ ᴀʟʟ ᴀʟʟᴏᴡᴇᴅ ᴄʜᴀᴛs ᴏғ ʏᴏᴜʀ ʙᴏᴛ.</blockquote>
+"""
