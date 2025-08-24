@@ -176,36 +176,56 @@ class Call(PyTgCalls):
         except:
             pass
 
-    async def skip_stream(
-        self,
-        chat_id: int,
-        link: str,
-        video: Union[bool, str] = None,
-        image: Union[bool, str] = None,
-    ):
-        assistant = await group_assistant(self, chat_id)
-        audio_stream_quality = await get_audio_bitrate(chat_id)
-        video_stream_quality = await get_video_bitrate(chat_id)
-        if video:
-            stream = MediaStream(
-                link,
-                audio_parameters=audio_stream_quality,
-                video_parameters=video_stream_quality,
-            )
-        else:
-            if image and config.PRIVATE_BOT_MODE == str(True):
-                stream = MediaStream(
-                    link,
-                    image,
-                    audio_parameters=audio_stream_quality,
-                    video_parameters=video_stream_quality,
-                )
-            else:
-                stream = MediaStream(link, audio_parameters=audio_stream_quality)
-        await assistant.change_stream(
-            chat_id,
-            stream,
-        )
+    async def skip_stream( self, chat_id: int, video: Union[bool, str] = None, ): check = db.get(chat_id) if not check or len(check) < 2: # kalau kosong atau hanya 1 lagu, stop return await self.stop_stream(chat_id)
+
+# buang lagu sekarang
+popped = check.pop(0)
+if popped:
+    await auto_clean(popped)
+
+# reset loop biar skip beneran maju
+loop = await get_loop(chat_id)
+if loop != 0:
+    await set_loop(chat_id, 0)
+
+# ambil lagu berikutnya
+next_track = check[0]
+assistant = await group_assistant(self, chat_id)
+audio_stream_quality = await get_audio_bitrate(chat_id)
+video_stream_quality = await get_video_bitrate(chat_id)
+
+queued = next_track["file"]
+streamtype = next_track["streamtype"]
+videoid = next_track["vidid"]
+user = next_track["by"]
+original_chat_id = next_track["chat_id"]
+title = (next_track["title"]).title()
+
+video = True if str(streamtype) == "video" else False
+
+# bikin stream baru
+stream = MediaStream(
+    queued,
+    audio_parameters=audio_stream_quality,
+    video_parameters=video_stream_quality if video else None,
+)
+
+await assistant.change_stream(chat_id, stream)
+
+# update notifikasi lagu baru
+img = await get_thumb(videoid)
+button = stream_markup(await get_string(await get_lang(chat_id)), videoid, chat_id)
+run = await app.send_photo(
+    original_chat_id,
+    photo=img,
+    caption=f"⏭ Skip! Sekarang memutar **{title}**",
+    reply_markup=InlineKeyboardMarkup(button),
+)
+db[chat_id][0]["mystic"] = run
+db[chat_id][0]["markup"] = "stream"
+
+
+
 
     async def seek_stream(self, chat_id, file_path, to_seek, duration, mode):
         assistant = await group_assistant(self, chat_id)
