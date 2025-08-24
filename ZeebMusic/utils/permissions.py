@@ -9,6 +9,7 @@ from ZeebMusic import app
 from ZeebMusic.misc import SUDOERS
 
 
+
 async def member_permissions(chat_id: int, user_id: int):
     perms = []
     member = (await app.get_chat_member(chat_id, user_id)).privileges
@@ -52,12 +53,20 @@ async def authorised(func, subFunc2, client, message, *args, **kwargs):
     return subFunc2
 
 
-async def unauthorised(message: Message, permission, subFunc2):
+async def unauthorised(
+    message: Message, permission, subFunc2, bot_lacking_permission=False
+):
     chatID = message.chat.id
-    text = (
-        "You don't have the required permission to perform this action."
-        + f"\n**Permission:** __{permission}__"
-    )
+    if bot_lacking_permission:
+        text = (
+            "<blockquote>I don't have the required permission to perform this action.</blockquote>"
+            + f"\n**Permission:** __{permission}__"
+        )
+    else:
+        text = (
+            "<blockquote>You don't have the required permission to perform this action.</blockquote>"
+            + f"\n**Permission:** __{permission}__"
+        )
     try:
         await message.reply_text(text)
     except ChatWriteForbidden:
@@ -65,11 +74,25 @@ async def unauthorised(message: Message, permission, subFunc2):
     return subFunc2
 
 
+async def bot_permissions(chat_id: int):
+    perms = []
+    bot_id = (await app.get_me()).id
+    return await member_permissions(chat_id, bot_id)
+
+
 def adminsOnly(permission):
     def subFunc(func):
         @wraps(func)
         async def subFunc2(client, message: Message, *args, **kwargs):
             chatID = message.chat.id
+
+            # Check if the bot has the required permission
+            bot_perms = await bot_permissions(chatID)
+            if permission not in bot_perms:
+                return await unauthorised(
+                    message, permission, subFunc2, bot_lacking_permission=True
+                )
+
             if not message.from_user:
                 # For anonymous admins
                 if message.sender_chat and message.sender_chat.id == message.chat.id:
@@ -82,6 +105,7 @@ def adminsOnly(permission):
                         **kwargs,
                     )
                 return await unauthorised(message, permission, subFunc2)
+
             # For admins and sudo users
             userID = message.from_user.id
             permissions = await member_permissions(chatID, userID)
