@@ -591,11 +591,11 @@ class Call(PyTgCalls):
                 else:
     # cek apakah masih ada queue
                     if len(check) > 0:
-                    await self.play(client, chat_id)
-                else:
-                    await _clear_(chat_id)
-                    await client.leave_call(chat_id)
-                    print(f"[AutoLeave]Request lagi kak eummm {chat_id}")
+                        await self.play(client, chat_id)
+                    else:
+                        await _clear_(chat_id)
+                        await client.leave_call(chat_id)
+                        print(f"[AutoLeave]Request lagi kak eummm {chat_id}")
             except Exception as e:
                 print(f"[StreamEnd ERROR] {e}")
                 return
