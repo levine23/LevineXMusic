@@ -51,7 +51,7 @@ async def skip(cli, message: Message, _, chat_id):
                                         ),
                                         disable_web_page_preview=True,
                                     )
-                                    await Champu.stop_stream(chat_id)
+                                    await Zb.stop_stream(chat_id)
                                 except:
                                     return
                                 break
@@ -76,7 +76,7 @@ async def skip(cli, message: Message, _, chat_id):
                     disable_web_page_preview=True,
                 )
                 try:
-                    return await Champu.stop_stream(chat_id)
+                    return await Zb.stop_stream(chat_id)
                 except:
                     return
         except:
@@ -101,7 +101,7 @@ async def skip(cli, message: Message, _, chat_id):
         if n == 0:
             return await message.reply_text(_["admin_11"].format(title))
         try:
-            await Zb.skip_stream(chat_id, link, video=status)
+            await Champu.skip_stream(chat_id, link, video=status)
         except Exception:
             return await message.reply_text(_["call_7"])
         button = telegram_markup(_, chat_id)
@@ -208,4 +208,4 @@ async def skip(cli, message: Message, _, chat_id):
                 reply_markup=InlineKeyboardMarkup(button),
             )
             db[chat_id][0]["mystic"] = run
-            db[chat_id][0]["markup"] = "stream"
+            db[chat_id][0]["markup"] = "stream" 
