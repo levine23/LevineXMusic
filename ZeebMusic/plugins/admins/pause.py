@@ -15,7 +15,6 @@ PAUSE_COMMAND = get_command("PAUSE_COMMAND")
 
 @app.on_message(filters.command(PAUSE_COMMAND) & filters.group & ~BANNED_USERS)
 @require_fsub
-@AdminRightsCheck
 async def pause_admin(cli, message: Message, _, chat_id):
     if not len(message.command) == 1:
         return await message.reply_text(_["general_2"])
