@@ -9,7 +9,6 @@ from ZeebMusic import app
 from ZeebMusic.misc import SUDOERS
 
 
-
 async def member_permissions(chat_id: int, user_id: int):
     perms = []
     member = (await app.get_chat_member(chat_id, user_id)).privileges
