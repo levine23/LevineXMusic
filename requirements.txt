@@ -16,8 +16,8 @@ wget
 pymongo
 pytube
 pykeyboard
-py-tgcalls==1.2.9
-ntgcalls==1.1.2
+py-tgcalls==2.0.6
+ntgcalls
 python-dotenv
 pyyaml==5.3.1
 requests
