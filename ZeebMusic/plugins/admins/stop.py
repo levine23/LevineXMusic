@@ -1,27 +1,34 @@
+import asyncio
+import random
+
 from pyrogram import filters
-from pyrogram.types import Message
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-
-
-from config import BANNED_USERS, CHANNEL_USERNAME
-from ZeebMusic.utils.decorators.fsub import require_fsub
-from ZeebMusic import app
-from ZeebMusic.core.call import Zb
-from ZeebMusic.utils.database import (
-    set_loop,
-    delete_filter,
-    is_maintenance,
-    is_commanddelete_on,
-    get_lang,
-    is_nonadmin_chat,
-    is_active_chat,
-    get_cmode,
+from pyrogram.enums import ChatMemberStatus
+from pyrogram.errors import UserNotParticipant
+from pyrogram.types import (
+    ChatMemberUpdated,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
 )
 
-from config import adminlist
-from ZeebMusic.plugins import extra_plugins_enabled
+from config import BANNED_USERS, adminlist, CHANNEL_USERNAME
+from ZeebMusic.utils.decorators.fsub import require_fsub
 from strings import get_string
+from ZeebMusic import app
+from ZeebMusic.core.call import Zb
 from ZeebMusic.misc import SUDOERS
+from ZeebMusic.plugins import extra_plugins_enabled
+from ZeebMusic.utils.database import (
+    delete_filter,
+    get_assistant,
+    get_cmode,
+    get_lang,
+    is_active_chat,
+    is_commanddelete_on,
+    is_maintenance,
+    is_nonadmin_chat,
+    set_loop,
+)
 
 
 @app.on_message(
