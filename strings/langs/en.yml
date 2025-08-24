@@ -155,29 +155,8 @@ cplay_4 : "<blockquote expandable>ꜰᴀɪʟᴇᴅ ᴛᴏ ɢᴇᴛ ᴄʜᴀɴɴ�
 cplay_5 : "<blockquote>ᴏɴʟʏ ᴄʜᴀɴɴᴇʟs ᴀʀᴇ sᴜᴘᴘᴏʀᴛᴇᴅ.</blockquote>"
 cplay_6 : "<blockquote expandable>ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ʙᴇ ᴛʜᴇ <n>ᴏᴡɴᴇʀ</n> ᴏꜰ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ [{0}] ᴛᴏ ᴄᴏɴɴᴇᴄᴛ ɪᴛ ᴡɪᴛʜ ᴛʜɪs ɢʀᴏᴜᴘ.\nᴄʜᴀɴɴᴇʟ's ᴏᴡɴᴇʀ: @{1}\n\nᴀʟᴛᴇʀɴᴀᴛɪᴠᴇʟʏ ʏᴏᴜ ᴄᴀɴ ʟɪɴᴋ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴛᴏ ᴛʜᴀᴛ ᴄʜᴀɴɴᴇʟ ᴀɴᴅ ᴛʜᴇɴ ᴛʀʏ ᴄᴏɴɴɴᴇᴄᴛɪɴɢ ᴡɪᴛʜ `/channelplay linked`</blockquote>"
 
-#Random Emojis While Playing
-PPLAY_1 : "🦋"
-PPLAY_2 : "😄"
-PPLAY_3 : "😏"
-PPLAY_4 : "🩷"
-PPLAY_5 : "💘"
-PPLAY_6 : "😂"
-PPLAY_7 : "😘"
-PPLAY_8 : "🥸"
-PPLAY_9 : "🙊"
-PPLAY_10 : "⚡️"
-PPLAY_11 : "🌝"
-PPLAY_12 : "❄️"
-PPLAY_13 : "🌺"
-PPLAY_14 : "🥰"
-PPLAY_15 : "😱"
-PPLAY_16 : "🥺"
-PPLAY_17 : "😈"
 
-#Play
-
-play_1 : "**🦋**"
-
+play_1 : "CAACAgUAAxkBAAE6AoBoqaqvQVbrx70gW4Ukda8mfIEy5wAC4QUAAlCr8FSQGdjeSlzAjzYE"
 play_2 : "<blockquote expandable><n>ᴄʜᴀɴɴᴇʟ ᴘʟᴀʏ ᴍᴏᴅᴇ</n>\n ᴘʀᴏᴄᴇssɪɴɢ ǫᴜᴇʀʏ... ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ!\n\nʟɪɴᴋᴇᴅ ᴄʜᴀɴɴᴇʟ: {0}</blockquote>"
 play_3 : "<blockquote>ꜰᴀɪʟᴇᴅ ᴛᴏ ᴘʀᴏᴄᴇss ǫᴜᴇʀʏ !</blockquote>"
 play_4 : "<blockquote expandable><n>ᴀᴅᴍɪɴs ᴏɴʟʏ ᴘʟᴀʏ</n>\nᴏɴʟʏ ᴀᴅᴍɪɴs ᴀɴᴅ ᴀᴜᴛʜ ᴜsᴇʀs ᴄᴀɴ ᴘʟᴀʏ ᴍᴜsɪᴄ ɪɴ ᴛʜɪs ɢʀᴏᴜᴘ.\n\nᴄʜᴀɴɢᴇ ᴍᴏᴅᴇ ᴠɪᴀ /playmode ᴀɴᴅ ɪꜰ ʏᴏᴜ'ʀᴇ ᴀʟʀᴇᴀᴅʏ ᴀᴅᴍɪɴ, ʀᴇʟᴏᴀᴅ ᴀᴅᴍɪɴᴄᴀᴄʜᴇ ᴠɪᴀ /admincache or /reload</blockquote>"
