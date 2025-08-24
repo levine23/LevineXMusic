@@ -12,7 +12,7 @@ from ZeebMusic.utils.database import get_loop
 from ZeebMusic.utils.decorators import AdminRightsCheck
 from ZeebMusic.utils.inline.play import stream_markup, telegram_markup
 from ZeebMusic.utils.stream.autoclear import auto_clean
-from ZeebMusic.utils.thumbnails import gen_thumb
+from ZeebMusic.utils.thumbnails import get_thumb
 
 # Commands
 SKIP_COMMAND = get_command("SKIP_COMMAND")
