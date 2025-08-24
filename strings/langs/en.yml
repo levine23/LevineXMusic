@@ -23,7 +23,7 @@ call_3 : "<blockquote><b>Pengecualian Terjadi Saat Mengundang Akun Asisten ke ch
 call_4 : "<blockquote><b>Bot memerlukan **Undang Pengguna Melalui Tautan** Izin untuk mengundang akun asisten ke grup obrolan kamu.</b></blockquote>"
 call_5 : "<blockquote><b>Akun Asisten akan bergabung dalam 5 Detik.. Harap Tunggu!</b></blockquote>"
 call_6 : "<blockquote><b>Akun Asisten[{0}] Berhasil Bergabung.\n\nMulai Musik Sekarang</b></blockquote>"
-call_7 : ""
+call_7 : "<blockquote><b>**Hak Admin yang Berbahaya Diberikan **\n\nHarap hapus hak **BAN PENGGUNA** dari bot.</b></blockquote>"
 call_8 : "<blockquote><b>**Hak Admin yang Berbahaya Diberikan **\n\nHarap hapus hak **TAMBAHKAN ADMIN BARU** dari bot.</b></blockquote>"
 call_9 : "<blockquote><b>**Gagal mengganti Aliran**\nSilakan gunakan /skip untuk mengganti trek lagi.</b></blockquote>"
 call_10 : "<blockquote><b>Mengunduh Lagu Berikutnya dari Daftar Putar</b></blockquote>"
