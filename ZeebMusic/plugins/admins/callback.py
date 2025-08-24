@@ -30,7 +30,6 @@ from ZeebMusic.utils.formatters import seconds_to_min
 from ZeebMusic.utils.inline import (
     close_markup,
     stream_markup,
-    stream_markup2,
 )
 from ZeebMusic.utils.inline.play import stream_markup
 from ZeebMusic.utils.stream.autoclear import auto_clean
