@@ -29,11 +29,6 @@ from ZeebMusic.utils.decorators.language import languageCB
 from ZeebMusic.utils.formatters import seconds_to_min
 from ZeebMusic.utils.inline import (
     close_markup,
-    panel_markup_1,
-    panel_markup_2,
-    panel_markup_3,
-    panel_markup_4,
-    panel_markup_5,
     stream_markup,
     stream_markup2,
 )
@@ -47,26 +42,6 @@ downvoters = {}
 
 # =============================FUNCTIONS==============================#
 
-
-@app.on_callback_query(filters.regex("PanelMarkup") & ~BANNED_USERS)
-@languageCB
-async def markup_panel(client, CallbackQuery: CallbackQuery, _):
-    await CallbackQuery.answer()
-    callback_data = CallbackQuery.data.strip()
-    callback_request = callback_data.split(None, 1)[1]
-    videoid, chat_id = callback_request.split("|")
-    chat_id = CallbackQuery.message.chat.id
-    buttons = panel_markup_1(_, videoid, chat_id)
-
-    try:
-        await CallbackQuery.edit_message_reply_markup(
-            reply_markup=InlineKeyboardMarkup(buttons)
-        )
-    except:
-        return
-    if chat_id not in wrong:
-        wrong[chat_id] = {}
-    wrong[chat_id][CallbackQuery.message.id] = True
 
 
 @app.on_callback_query(filters.regex("MainMarkup") & ~BANNED_USERS)
@@ -107,71 +82,6 @@ async def music_markup(client, CallbackQuery, _):
     if chat_id not in wrong:
         wrong[chat_id] = {}
     wrong[chat_id][CallbackQuery.message.id] = True
-
-
-@app.on_callback_query(filters.regex("Pages") & ~BANNED_USERS)
-@languageCB
-async def del_back_playlist(client, CallbackQuery, _):
-    await CallbackQuery.answer()
-    callback_data = CallbackQuery.data.strip()
-    chat_id = CallbackQuery.message.chat.id
-    playing = db.get(chat_id)
-    
-    if not playing:
-        return await CallbackQuery.answer(_["queue_2"], show_alert=True)
-
-    # Initialize pages
-    pages = 0  # or any default value you see fit
-
-    callback_request = callback_data.split(None, 1)[1]
-    state, pages_str, videoid, chat = callback_request.split("|")
-    pages = int(pages_str)  # Assign the parsed value to pages
-    chat_id = int(chat)
-
-    if pages == 3:
-        buttons = panel_markup_4(
-            _, 
-            playing[0]["vidid"], 
-            chat_id, 
-            seconds_to_min(playing[0]["played"]), 
-            playing[0]["dur"],
-        )
-    callback_request = callback_data.split(None, 1)[1]
-    state, pages, videoid, chat = callback_request.split("|")
-    chat_id = int(chat)
-    pages = int(pages)
-    if state == "Forw":
-        if pages == 0:
-            buttons = panel_markup_5(_, videoid, chat_id)
-        if pages == 1:
-            buttons = panel_markup_1(_, videoid, chat_id)
-        if pages == 2:
-            buttons = panel_markup_2(_, videoid, chat_id)
-
-    if state == "Back":
-        if pages == 1:
-            buttons = panel_markup_1(_, videoid, chat_id)
-        if pages == 2:
-            buttons = panel_markup_5(_, videoid, chat_id)
-        if pages == 0:
-            buttons = panel_markup_3(_, videoid, chat_id)
-        if pages == 4:
-            buttons = panel_markup_
-        if pages == 3:
-            buttons = panel_markup_4(
-                _,
-                playing[0]["vidid"],
-                chat_id,
-                seconds_to_min(playing[0]["played"]),
-                playing[0]["dur"],
-            )
-    try:
-        await CallbackQuery.edit_message_reply_markup(
-            reply_markup=InlineKeyboardMarkup(buttons)
-        )
-    except:
-        return
-
 
 @app.on_callback_query(filters.regex("unban_assistant"))
 async def unban_assistant(_, callback: CallbackQuery):
