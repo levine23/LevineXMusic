@@ -200,8 +200,6 @@ class Call(PyTgCalls):
                    return await assistant.leave_group_call(chat_id)
                 except:
                     return
-
-    # Ambil kualitas audio/video
     audio_stream_quality = await get_audio_bitrate(chat_id)
     video_stream_quality = await get_video_bitrate(chat_id)
 
