@@ -36,59 +36,200 @@ async def stop_music(cli, message: Message):
             )
     if not len(message.command) < 2:
         if extra_plugins_enabled:
-            if not message.command[0][0] == "c":
+            if not message.command[0][0] == "c" and not message.command[0][0] == "e":
                 filter = " ".join(message.command[1:])
                 deleted = await delete_filter(message.chat.id, filter)
                 if deleted:
-                    return await message.reply_text(f"<blockquote>**ᴅᴇʟᴇᴛᴇᴅ ғɪʟᴛᴇʀ {filter}.**</blockquote>")
+                    return await message.reply_text(f"ᴅᴇʟᴇᴛᴇᴅ ғɪʟᴛᴇʀ {filter}.")
                 else:
-                    return await message.reply_text("<blockquote>**ɴᴏ sᴜᴄʜ ғɪʟᴛᴇʀ.**</blockquote>")
+                    return await message.reply_text("ɴᴏ sᴜᴄʜ ғɪʟᴛᴇʀ.")
 
     if await is_commanddelete_on(message.chat.id):
         try:
             await message.delete()
         except:
             pass
-        try:
-            language = await get_lang(message.chat.id)
-            _ = get_string(language)
-        except:
-            _ = get_string("en")
+    try:
+        language = await get_lang(message.chat.id)
+        _ = get_string(language)
+    except:
+        _ = get_string("en")
 
-        if message.sender_chat:
-            upl = InlineKeyboardMarkup(
+    if message.sender_chat:
+        upl = InlineKeyboardMarkup(
+            [
                 [
-                    [
-                        InlineKeyboardButton(
-                            text="How to Fix this? ",
-                            callback_data="AnonymousAdmin",
-                        ),
-                    ]
+                    InlineKeyboardButton(
+                        text="How to Fix this?",
+                        callback_data="AnonymousAdmin",
+                    ),
                 ]
-            )
-            return await message.reply_text(_["general_4"], reply_markup=upl)
+            ]
+        )
+        return await message.reply_text(_["general_4"], reply_markup=upl)
 
-        if message.command[0][0] == "c":
-            chat_id = await get_cmode(message.chat.id)
-            if chat_id is None:
-                return await message.reply_text(_["setting_12"])
-            try:
-                await app.get_chat(chat_id)
-            except:
-                return await message.reply_text(_["cplay_4"])
-        else:
-            chat_id = message.chat.id
-        if not await is_active_chat(chat_id):
-            return await message.reply_text(_["general_6"])
-        is_non_admin = await is_nonadmin_chat(message.chat.id)
-        if not is_non_admin:
-            if message.from_user.id not in SUDOERS:
-                admins = adminlist.get(message.chat.id)
-                if not admins:
-                    return await message.reply_text(_["admin_18"])
-                else:
-                    if message.from_user.id not in admins:
-                        return await message.reply_text(_["admin_19"])
-    await Zb.stop_stream(chat_id)
+    if message.command[0][0] == "c":
+        chat_id = await get_cmode(message.chat.id)
+        if chat_id is None:
+            return await message.reply_text(_["setting_12"])
+        try:
+            await app.get_chat(chat_id)
+        except:
+            return await message.reply_text(_["cplay_4"])
+    else:
+        chat_id = message.chat.id
+    if not await is_active_chat(chat_id):
+        return await message.reply_text(_["general_6"])
+    is_non_admin = await is_nonadmin_chat(message.chat.id)
+    if not is_non_admin:
+        if message.from_user.id not in SUDOERS:
+            admins = adminlist.get(message.chat.id)
+            if not admins:
+                return await message.reply_text(_["admin_18"])
+            else:
+                if message.from_user.id not in admins:
+                    return await message.reply_text(_["admin_19"])
+    await Zb.st_stream(chat_id)
     await set_loop(chat_id, 0)
     await message.reply_text(_["admin_9"].format(message.from_user.mention))
+
+
+from pyrogram import filters
+from pyrogram.types import Message
+
+from ZeebMusic import app
+
+photo = [
+    "https://envs.sh/qeq.jpg",
+    "https://envs.sh/qe0.jpg",
+    "https://envs.sh/qeS.jpg",
+    "https://envs.sh/qeW.jpg",
+]
+
+
+@app.on_chat_member_updated(filters.group, group=6)
+async def assistant_banned(client: app, member: ChatMemberUpdated):
+    chat_id = member.chat.id
+    userbot = await get_assistant(chat_id)
+
+    try:
+        # Kalau update ini berkaitan dengan assistant bot
+        if member.new_chat_member.user.id == userbot.id:
+            if member.new_chat_member.status == ChatMemberStatus.BANNED:
+                remove_by = member.from_user.mention if member.from_user else "<blockquote>𝐔ɴᴋɴᴏᴡɴ 𝐔sᴇʀ</blockquote>"
+                title = member.chat.title
+                username = (
+                    f"@{member.chat.username}" if member.chat.username else "<blockquote>𝐏ʀɪᴠᴀᴛᴇ 𝐂ʜᴀᴛ</blockquote>"
+                )
+
+                left_message = f"""<blockquote expandable>𝗔𝘀𝘀𝗶𝘀𝘁𝗮𝗻𝘁_𝗕𝗮𝗻𝗻𝗲𝗱❱\n║\n
+                𝐂ʜᴀᴛ » {title}\n║\n
+                𝐀ssɪsᴛᴀɴᴛ 𝐈ᴅ » {userbot.id}\n║\n
+                𝐍ᴀᴍᴇ » @{userbot.username}\n║\n
+                𝐁ᴀɴ 𝐁ʏ » {remove_by}\n</blockquote>"""
+
+                keyboard = InlineKeyboardMarkup(
+                    [
+                        [
+                            InlineKeyboardButton(
+                                "𝐔𝐧𝐛𝐚𝐧 𝐀𝐬𝐬𝐢𝐬𝐭𝐚𝐧𝐭",
+                                callback_data="unban_userbot",
+                            )
+                        ]
+                    ]
+                )
+
+                await app.send_photo(
+                    chat_id,
+                    photo=random.choice(photo),
+                    caption=left_message,
+                    reply_markup=keyboard,
+                )
+
+                # Hentikan musik, reset loop, unban, lalu tunggu
+                await Zb.st_stream(chat_id)
+                await set_loop(chat_id, 0)
+                await app.unban_chat_member(chat_id, userbot.id)
+                await asyncio.sleep(10)
+
+    except Exception as e:
+        print(f"[assistant_banned] Error: {e}")
+
+
+@app.on_chat_member_updated(filters.group, group=-8)
+async def assistant_left(client: app, member: ChatMemberUpdated):
+    chat_id = member.chat.id
+    try:
+        userbot = await get_assistant(chat_id)
+        userbot_id = userbot.id
+
+        # Check if the leaving member is the userbot
+        if (
+            not member.new_chat_member
+            and member.old_chat_member.user.id == userbot_id
+            and member.old_chat_member.status not in {"banned", "left", "restricted"}
+            and member.old_chat_member
+        ):
+            left_message = (
+                f"""<blockquote expandable>Assistant Has Left This Chat\n\n
+                  Id: `{userbot.id}`\n
+                  Name: @{userbot.username}\n\n
+                  Invite Assistant By: /userbotjoin</blockquote>"""
+            )
+            await app.send_photo(
+                chat_id,
+                photo=random.choice(photo),
+                caption=left_message,
+                reply_markup=keyboard,
+                
+            )
+
+            await Zb.st_stream(chat_id)
+            await set_loop(chat_id, 0)
+            await asyncio.sleep(10)
+    except UserNotParticipant:
+        left_message = (
+            f"""<blockquote expandable>Assistant Has Left This Chat\n\n
+              Id: `{userbot.id}`\n
+              Name: @{userbot.username}\n\n
+              Invite Assistant By: /userbotjoin</blockquote>"""
+        )
+        await app.send_photo(
+            chat_id,
+            photo=random.choice(photo),
+            caption=left_message,
+            reply_markup=keyboard,
+            
+        )
+        await Zb.st_stream(chat_id)
+        await set_loop(chat_id, 0)
+        await asyncio.sleep(10)
+    except Exception as e:
+        return
+
+@app.on_message(filters.video_chat_started & filters.group)
+async def brah(_, msg):
+    chat_id = msg.chat.id
+    try:
+        await msg.reply("<blockquote>ᴠɪᴅᴇᴏ ᴄʜᴀᴛ sᴛᴀʀᴛᴇᴅ</blockquote>")
+        await Zb.st_stream(chat_id)
+        await set_loop(chat_id, 0)
+    except Exception as e:
+        if isinstance(e, ChatWriteForbidden):
+            print(f"Error: Bot cannot send messages in chat {chat_id}. Check permissions.")
+        else:
+            return await msg.reply(f"**Error {e}**")
+
+# vc off
+@app.on_message(filters.video_chat_ended & filters.group)
+async def brah2(_, msg):
+    chat_id = msg.chat.id
+    try:
+        await msg.reply("<blockquote>ᴠɪᴅᴇᴏ ᴄʜᴀᴛ ᴇɴᴅᴇᴅ</blockquote>")
+        await Zb.st_stream(chat_id)
+        await set_loop(chat_id, 0)
+    except Exception as e:
+        if isinstance(e, ChatWriteForbidden):
+            print(f"Error: Bot cannot send messages in chat {chat_id}. Check permissions.")
+        else:
+            return await msg.reply(f"**Error {e}**")
