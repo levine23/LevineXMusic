@@ -28,7 +28,7 @@ from ZeebMusic.utils.database import (
 from ZeebMusic.utils.decorators.language import LanguageStart
 from ZeebMusic.utils.formatters import get_readable_time
 from ZeebMusic.utils.functions import MARKDOWN, WELCOMEHELP
-from ZeebMusic.utils.inline import alive_panel, private_panel, start_pannel
+from ZeebMusic.utils.inline import alive_panel, private_panel, music_start_panel, start_pannel
 from ZeebMusic.utils.note_funcs import send_notes
 from .help import help_parser
 
